@@ -18,10 +18,13 @@ const select = new Select({
 });
 
 const slider = new Carousel('#slider', {
-    speed: 500,
+    speed: 400,
     //auto: true,
+    delay: 4000,
     //arrows: false,
-    first: 3,
+    //first: 2,
+
+    //осталось сделать
     //thumbnail: true,
     //mode: 'slide'; //opt: fade
     //orientation: 'horizontal' //opt: vertical

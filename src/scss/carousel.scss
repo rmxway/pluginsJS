@@ -1,10 +1,11 @@
 .carousel {
     margin-bottom: $padding;
+    z-index: 1;
     &__wrapper {
         position: relative;
         max-width: 100%;
         overflow: hidden;
-        border: 1px solid transparent;
+        border: 3px solid transparent;
         border-radius: 5px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
     }
@@ -44,17 +45,26 @@
         &-right {
             $this: &;
             display: flex;
-            justify-content: center;
             align-items: center;
             font-size: 30px;
             opacity: 0.5;
-            width: 60px;
+            width: 50%;
             height: 100%;
             cursor: pointer;
             transition: 0.3s;
-            background-color: rgba(0, 0, 0, 0.3);
             &:hover {
                 opacity: 1;
+            }
+
+            .fa {
+                position: absolute;
+
+                &-chevron-left {
+                    left: 20px;
+                }
+                &-chevron-right {
+                    right: 20px;
+                }
             }
         }
     }

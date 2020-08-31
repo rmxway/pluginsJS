@@ -18,12 +18,10 @@ function createTemplate(images, arrows, first) {
             .map((image, index) => {
                 return `
                 <div class="carousel__slider ${
-                    first && first === index + 1
-                        ? 'carousel__slider--current'
-                        : ''
-                }${
-                    !first && index === 0 ? 'carousel__slider--current' : ''
-                }" data-id="${index + 1}">${image.outerHTML}</div>`;
+                    first && first === index + 1 ? 'current' : ''
+                }${!first && index === 0 ? 'current' : ''}" data-id="${
+                    index + 1
+                }">${image.outerHTML}</div>`;
             })
             .join('')}
     `;
@@ -47,15 +45,8 @@ export default class Carousel {
         this.$images = Array.from(this.$el.querySelectorAll('img'));
 
         this.#render();
-        this.#firstPosition();
 
-        this.$el.addEventListener('click', this.handleClick);
-    }
-
-    #render() {
-        const { arrows, first } = this.options;
-        this.$el.innerHTML = createTemplate(this.$images, arrows, first);
-        if (arrows) {
+        if (this.options.arrows) {
             this.$next = this.$el.querySelector('.carousel__arrows-right');
             this.$prev = this.$el.querySelector('.carousel__arrows-left');
         }
@@ -69,6 +60,17 @@ export default class Carousel {
         );
 
         this.handleClick = this.handleClick.bind(this);
+
+        this.#firstPosition();
+
+        this.options.auto ? this.#auto() : null;
+
+        this.$el.addEventListener('click', this.handleClick);
+    }
+
+    #render() {
+        const { arrows, first } = this.options;
+        this.$el.innerHTML = createTemplate(this.$images, arrows, first);
     }
 
     #firstPosition() {
@@ -78,10 +80,33 @@ export default class Carousel {
             ? this.options.speed.toString() / 1000 + 's'
             : '0.3s';
         if (this.options.first) {
-            this.currentId = this.$block.querySelector(
-                '.carousel__slider--current'
-            ).dataset.id;
+            this.currentId = this.$block.querySelector('.current').dataset.id;
         }
+
+        // смещение слайдера в место первого слайда
+        this.$block.style.left =
+            parseInt(this.$blockStyles.left, 10) -
+            parseInt(this.$sliderStyles.width, 10) * (this.currentId - 1) +
+            'px';
+    }
+
+    #changeCurrentSlider() {
+        const slides = Array.from(
+            this.$el.querySelectorAll('.carousel__slider')
+        );
+        slides.forEach((item) => {
+            item.classList.remove('current');
+        });
+        slides
+            .find((item) => parseInt(item.dataset.id, 10) === this.currentId)
+            .classList.add('current');
+    }
+
+    #auto() {
+        const interval = setInterval(() => {
+            this.next();
+            this.#changeCurrentSlider();
+        }, this.options.delay);
     }
 
     handleClick(event) {
@@ -91,20 +116,59 @@ export default class Carousel {
         } else if (type === 'btn-prev') {
             this.prev();
         }
+        this.#changeCurrentSlider();
+    }
+
+    animation(direction) {
+        if (this.inAnimation === false) {
+            const t = setTimeout(() => {
+                this.inAnimation = false;
+                clearTimeout(t);
+            }, this.options.speed);
+            this.$block.style.left = this.#calculateMove(direction);
+            this.inAnimation = true;
+        }
+    }
+
+    #calculateMove(dir) {
+        if (dir === 'next') {
+            if (this.$images.length === this.currentId) {
+                this.currentId = 1;
+                return '0px';
+            } else {
+                ++this.currentId;
+                return (
+                    parseInt(this.$blockStyles.left, 10) -
+                    parseInt(this.$sliderStyles.width, 10) +
+                    'px'
+                );
+            }
+        } else if (dir === 'prev') {
+            if (this.currentId === 1) {
+                this.currentId = this.$images.length;
+                return (
+                    parseInt(this.$blockStyles.left, 10) -
+                    parseInt(this.$sliderStyles.width, 10) *
+                        (this.currentId - 1) +
+                    'px'
+                );
+            } else {
+                --this.currentId;
+                return (
+                    parseInt(this.$blockStyles.left, 10) +
+                    parseInt(this.$sliderStyles.width, 10) +
+                    'px'
+                );
+            }
+        }
     }
 
     next() {
-        this.$block.style.left =
-            parseInt(this.$blockStyles.left, 10) -
-            parseInt(this.$sliderStyles.width, 10) +
-            'px';
+        this.animation('next');
     }
 
     prev() {
-        this.$block.style.left =
-            parseInt(this.$blockStyles.left, 10) +
-            parseInt(this.$sliderStyles.width, 10) +
-            'px';
+        this.animation('prev');
     }
 
     destroy() {
