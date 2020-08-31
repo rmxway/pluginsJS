@@ -1,0 +1,99 @@
+.select {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+    z-index: 0;
+    margin-bottom: $padding;
+
+    &__overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: none;
+        z-index: -100;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    &__input {
+        background-color: rgba(255, 255, 255, 0.7);
+        color: #222;
+        border: 1px solid darken($primary-color, 15%);
+        border-radius: 5px;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+
+        span {
+            font-size: 10px;
+            transform: rotate(0deg);
+            transition: 0.3s;
+        }
+
+        div,
+        span {
+            pointer-events: none;
+        }
+    }
+
+    &__dropdown {
+        position: absolute;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.1s;
+        background-color: white;
+        left: 0;
+        right: 0;
+        top: 100%;
+        z-index: 999999;
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid darken($primary-color, 15%);
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li {
+                cursor: pointer;
+                padding: 10px 15px;
+                border-bottom: 1px solid #eee;
+                color: #222;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                &:hover {
+                    background-color: #f9f9f9;
+                }
+
+                &.active {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+
+    &.open {
+        z-index: 1;
+        .select__overlay {
+            display: block;
+        }
+        .select__input {
+            span {
+                transform: rotate(180deg);
+            }
+        }
+        .select__dropdown {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}

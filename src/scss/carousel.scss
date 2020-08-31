@@ -1,0 +1,61 @@
+.carousel {
+    margin-bottom: $padding;
+    &__wrapper {
+        position: relative;
+        max-width: 100%;
+        overflow: hidden;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    }
+    &__block {
+        position: relative;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+    &__slider {
+        min-width: 100%;
+        img {
+            display: block;
+            max-width: 100%;
+        }
+    }
+    &__arrows {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transition: 0.3s;
+        opacity: 0.3;
+
+        .fa {
+            pointer-events: none;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &-left,
+        &-right {
+            $this: &;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            opacity: 0.5;
+            width: 60px;
+            height: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: rgba(0, 0, 0, 0.3);
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
