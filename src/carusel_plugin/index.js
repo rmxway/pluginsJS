@@ -1,4 +1,4 @@
-function createTemplate(images, arrows, first) {
+function createTemplate(images, first, arrows, thumbnail) {
     const arrowsTemplate =
         arrows || arrows === undefined
             ? `
@@ -25,12 +25,35 @@ function createTemplate(images, arrows, first) {
             })
             .join('')}
     `;
+    const imagesObj = (Object.from = images);
+    const thumbnailTamplate = thumbnail
+        ? `
+        <div class="carousel__thumbnails">
+            ${images
+                .map((image, index) => {
+                    return `
+                    <div class="carousel__thumbnail ${
+                        first && first === index + 1 ? 'current' : ''
+                    }${!first && index === 0 ? 'current' : ''}" data-id="${
+                        index + 1
+                    }" 
+                        style="background-image: url('${
+                            imagesObj[index].attributes.src.value
+                        }')">
+                    </div>
+                `;
+                })
+                .join('')}
+        </div>
+    `
+        : '';
     return `
         <div class="carousel__wrapper">
             ${arrowsTemplate}
+            ${thumbnailTamplate}    
             <div class="carousel__block">
                 ${imagesTemplate}
-            </div>    
+            </div>
         </div>
     `;
 }
@@ -41,6 +64,7 @@ export default class Carousel {
         this.options.speed = options.speed || 300;
         this.options.auto = options.auto || false;
         this.options.delay = options.delay || 3000;
+        this.options.thumbnail = options.thumbnail || false;
 
         this.autoplayInterval;
         this.inAnimation = false;
@@ -86,8 +110,13 @@ export default class Carousel {
     }
 
     #render() {
-        const { arrows, first } = this.options;
-        this.$el.innerHTML = createTemplate(this.$images, arrows, first);
+        const { arrows, first, thumbnail } = this.options;
+        this.$el.innerHTML = createTemplate(
+            this.$images,
+            arrows,
+            first,
+            thumbnail
+        );
     }
 
     #firstPosition() {
@@ -115,6 +144,19 @@ export default class Carousel {
         slides
             .find((item) => parseInt(item.dataset.id, 10) === this.currentId)
             .classList.add('current');
+        if (this.options.thumbnail) {
+            const thumbnails = Array.from(
+                this.$el.querySelectorAll('.carousel__thumbnail')
+            );
+            thumbnails.forEach((item) => {
+                item.classList.remove('current');
+            });
+            thumbnails
+                .find(
+                    (item) => parseInt(item.dataset.id, 10) === this.currentId
+                )
+                .classList.add('current');
+        }
     }
 
     createInterval() {
