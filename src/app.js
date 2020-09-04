@@ -19,7 +19,7 @@ const select = new Select({
 
 const slider = new Carousel('#slider', {
     speed: 400,
-    //auto: true,
+    auto: true,
     delay: 4000,
     //arrows: false,
     //first: 2,

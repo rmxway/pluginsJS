@@ -2,7 +2,12 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: $secondary-color;
+    //background-color: $secondary-color;
+    background-image: linear-gradient(
+        -90deg,
+        $secondary-color 0%,
+        adjust-hue($secondary-color, 10%) 100%
+    );
     color: #fff;
     overflow-y: scroll;
 }
@@ -14,7 +19,7 @@ body {
 }
 
 .slider-block {
-    max-width: 800px;
+    max-width: 650px;
     margin: 0 auto;
 }
 

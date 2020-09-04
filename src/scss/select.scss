@@ -19,7 +19,7 @@
     &__input {
         background-color: rgba(255, 255, 255, 0.7);
         color: #222;
-        border: 1px solid darken($primary-color, 15%);
+        border: 1px solid darken($secondary-color, 15%);
         border-radius: 5px;
         padding: 10px 15px;
         display: flex;
@@ -51,7 +51,7 @@
         z-index: 999999;
         max-height: 200px;
         overflow-y: auto;
-        border: 1px solid darken($primary-color, 15%);
+        border: 1px solid darken($secondary-color, 15%);
         border-top: none;
         border-radius: 0 0 5px 5px;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
@@ -75,7 +75,8 @@
                 }
 
                 &.active {
-                    color: $primary-color;
+                    background-color: lighten($secondary-color, 15%);
+                    //color: white;
                 }
             }
         }

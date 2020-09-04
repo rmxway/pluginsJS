@@ -38,33 +38,50 @@ function createTemplate(images, arrows, first) {
 export default class Carousel {
     constructor(selectId, options) {
         this.options = options;
+        this.options.speed = options.speed || 300;
+        this.options.auto = options.auto || false;
+        this.options.delay = options.delay || 3000;
+
+        this.autoplayInterval;
         this.inAnimation = false;
         this.currentId = 1;
+
         this.$el = document.querySelector(selectId);
         this.$el.classList.add('carousel');
         this.$images = Array.from(this.$el.querySelectorAll('img'));
 
         this.#render();
 
+        // Arrows of carousel
         if (this.options.arrows) {
             this.$next = this.$el.querySelector('.carousel__arrows-right');
             this.$prev = this.$el.querySelector('.carousel__arrows-left');
         }
 
+        // Block with images & styles
         this.$block = this.$el.querySelector('.carousel__block');
-        //  принимаем все стили этих элементов
-        this.$blockStyles = window.getComputedStyle(this.$block, null);
-        this.$sliderStyles = window.getComputedStyle(
+        //  принимаем все стили блока и слайда
+        this.blockStyles = window.getComputedStyle(this.$block, null);
+        this.slideStyles = window.getComputedStyle(
             this.$el.querySelector('.carousel__slider'),
             null
         );
 
         this.handleClick = this.handleClick.bind(this);
 
+        // First Position Carousel
         this.#firstPosition();
 
-        this.options.auto ? this.#auto() : null;
+        // Autoplay
+        if (this.options.auto) {
+            this.createInterval();
+            this.createInterval = this.createInterval.bind(this);
+            this.removeInterval = this.removeInterval.bind(this);
+            this.$el.addEventListener('mouseenter', this.removeInterval);
+            this.$el.addEventListener('mouseleave', this.createInterval);
+        }
 
+        // Event Click
         this.$el.addEventListener('click', this.handleClick);
     }
 
@@ -76,17 +93,15 @@ export default class Carousel {
     #firstPosition() {
         this.$block.style.left = '0px';
         // default speed: 0.3s
-        this.$block.style.transitionDuration = this.options.speed
-            ? this.options.speed.toString() / 1000 + 's'
-            : '0.3s';
+        this.$block.style.transitionDuration = this.options.speed / 1000 + 's';
         if (this.options.first) {
             this.currentId = this.$block.querySelector('.current').dataset.id;
         }
 
         // смещение слайдера в место первого слайда
         this.$block.style.left =
-            parseInt(this.$blockStyles.left, 10) -
-            parseInt(this.$sliderStyles.width, 10) * (this.currentId - 1) +
+            parseInt(this.blockStyles.left, 10) -
+            parseInt(this.slideStyles.width, 10) * (this.currentId - 1) +
             'px';
     }
 
@@ -102,11 +117,15 @@ export default class Carousel {
             .classList.add('current');
     }
 
-    #auto() {
-        const interval = setInterval(() => {
+    createInterval() {
+        this.autoplayInterval = setInterval(() => {
             this.next();
             this.#changeCurrentSlider();
         }, this.options.delay);
+    }
+
+    removeInterval() {
+        clearInterval(this.autoplayInterval);
     }
 
     handleClick(event) {
@@ -120,7 +139,7 @@ export default class Carousel {
     }
 
     animation(direction) {
-        if (this.inAnimation === false) {
+        if (!this.inAnimation) {
             const t = setTimeout(() => {
                 this.inAnimation = false;
                 clearTimeout(t);
@@ -138,8 +157,8 @@ export default class Carousel {
             } else {
                 ++this.currentId;
                 return (
-                    parseInt(this.$blockStyles.left, 10) -
-                    parseInt(this.$sliderStyles.width, 10) +
+                    parseInt(this.blockStyles.left, 10) -
+                    parseInt(this.slideStyles.width, 10) +
                     'px'
                 );
             }
@@ -147,16 +166,16 @@ export default class Carousel {
             if (this.currentId === 1) {
                 this.currentId = this.$images.length;
                 return (
-                    parseInt(this.$blockStyles.left, 10) -
-                    parseInt(this.$sliderStyles.width, 10) *
+                    parseInt(this.blockStyles.left, 10) -
+                    parseInt(this.slideStyles.width, 10) *
                         (this.currentId - 1) +
                     'px'
                 );
             } else {
                 --this.currentId;
                 return (
-                    parseInt(this.$blockStyles.left, 10) +
-                    parseInt(this.$sliderStyles.width, 10) +
+                    parseInt(this.blockStyles.left, 10) +
+                    parseInt(this.slideStyles.width, 10) +
                     'px'
                 );
             }
@@ -173,6 +192,9 @@ export default class Carousel {
 
     destroy() {
         this.$el.removeEventListener('click', this.handleClick);
+        this.$el.removeEventListener('mouseenter', this.removeInterval);
+        this.$el.removeEventListener('mouseleave', this.createInterval);
+        clearInterval(this.autoplayInterval);
         this.$el.remove();
     }
 }
