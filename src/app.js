@@ -24,9 +24,10 @@ const slider = new Carousel('#slider', {
     //arrows: false,
     //first: 3,
     thumbnail: true,
+    thumbLines: true,
 
     //осталось сделать
-    //thumbLines: true,
+
     //mode: 'slide'; //opt: fade
     //orientation: 'horizontal' //opt: vertical
 });

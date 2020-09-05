@@ -26,6 +26,23 @@
         max-width: 100%;
         z-index: 10;
         padding: 1px;
+
+        &--lines {
+            width: auto;
+            height: 20px;
+            justify-content: center;
+            padding: 0 10px;
+            background-color: rgba(0, 0, 0, 0);
+
+            .carousel__thumbnail {
+                max-width: 100%;
+                flex-grow: 1;
+                height: 4px;
+                border-radius: 5px;
+                margin: 3px;
+                background-color: white;
+            }
+        }
     }
     &__thumbnail {
         max-width: 100px;

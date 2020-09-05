@@ -1,4 +1,4 @@
-function createTemplate(images, first, arrows, thumbnail) {
+function createTemplate(images, first, arrows, thumbnail, thumbLines) {
     const arrowsTemplate =
         arrows || arrows === undefined
             ? `
@@ -26,27 +26,31 @@ function createTemplate(images, first, arrows, thumbnail) {
             .join('')}
     `;
     const imagesObj = (Object.from = images);
-    const thumbnailTamplate = thumbnail
-        ? `
-        <div class="carousel__thumbnails">
-            ${images
-                .map((image, index) => {
-                    return `
-                    <div class="carousel__thumbnail ${
-                        first && first === index + 1 ? 'current' : ''
-                    }${!first && index === 0 ? 'current' : ''}" data-id="${
-                        index + 1
-                    }" data-type="thumbnail"
-                        style="background-image: url('${
-                            imagesObj[index].attributes.src.value
-                        }')">
-                    </div>
-                `;
-                })
-                .join('')}
-        </div>
-    `
-        : '';
+    const thumbnailTamplate = `
+            ${
+                thumbnail &&
+                `<div class="carousel__thumbnails ${
+                    thumbLines && `carousel__thumbnails--lines`
+                }">
+                    ${images
+                        .map((image, index) => {
+                            return `
+                            <div class="carousel__thumbnail ${
+                                first && first === index + 1 ? 'current' : ''
+                            }${
+                                !first && index === 0 ? 'current' : ''
+                            }" data-id="${index + 1}" data-type="thumbnail"
+                                ${
+                                    !thumbLines &&
+                                    `style="background-image: url('${imagesObj[index].attributes.src.value}')"`
+                                }>
+                            </div>
+                        `;
+                        })
+                        .join('')}
+                </div>`
+            }
+    `;
     return `
         <div class="carousel__wrapper">
             ${arrowsTemplate}
@@ -65,6 +69,7 @@ export default class Carousel {
         this.options.auto = options.auto || false;
         this.options.delay = options.delay || 3000;
         this.options.thumbnail = options.thumbnail || false;
+        this.options.thumbLines = options.thumbLines || false;
 
         this.autoplayInterval;
         this.inAnimation = false;
@@ -117,12 +122,13 @@ export default class Carousel {
     }
 
     #render() {
-        const { arrows, first, thumbnail } = this.options;
+        const { arrows, first, thumbnail, thumbLines } = this.options;
         this.$el.innerHTML = createTemplate(
             this.$images,
             arrows,
             first,
-            thumbnail
+            thumbnail,
+            thumbLines
         );
     }
 
