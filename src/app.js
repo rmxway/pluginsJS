@@ -20,12 +20,15 @@ const select = new Select({
 const slider = new Carousel('#slider', {
     speed: 500,
     auto: true,
-    //delay: 4000,
+    delay: 4000,
     //arrows: false,
-    //first: 2,
+    //first: 3,
+    thumbnail: true,
 
     //осталось сделать
-    thumbnail: true,
+    //thumbLines: true,
     //mode: 'slide'; //opt: fade
     //orientation: 'horizontal' //opt: vertical
 });
+
+window.s = slider;

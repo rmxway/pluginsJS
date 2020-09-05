@@ -36,6 +36,7 @@
         background-size: cover;
         opacity: 0.4;
         transition: 0.3s;
+        cursor: pointer;
 
         &.current {
             opacity: 1;

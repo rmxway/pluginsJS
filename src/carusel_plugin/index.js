@@ -36,7 +36,7 @@ function createTemplate(images, first, arrows, thumbnail) {
                         first && first === index + 1 ? 'current' : ''
                     }${!first && index === 0 ? 'current' : ''}" data-id="${
                         index + 1
-                    }" 
+                    }" data-type="thumbnail"
                         style="background-image: url('${
                             imagesObj[index].attributes.src.value
                         }')">
@@ -82,6 +82,13 @@ export default class Carousel {
             this.$prev = this.$el.querySelector('.carousel__arrows-left');
         }
 
+        if (this.options.thumbnail) {
+            this.$thumbnails = Array.from(
+                this.$el.querySelectorAll('.carousel__thumbnail')
+            );
+            //console.log(this.$thumbnails);
+        }
+
         // Block with images & styles
         this.$block = this.$el.querySelector('.carousel__block');
         //  принимаем все стили блока и слайда
@@ -120,18 +127,16 @@ export default class Carousel {
     }
 
     #firstPosition() {
-        this.$block.style.left = '0px';
-        // default speed: 0.3s
-        this.$block.style.transitionDuration = this.options.speed / 1000 + 's';
         if (this.options.first) {
-            this.currentId = this.$block.querySelector('.current').dataset.id;
+            this.currentId = this.options.first;
+            // смещение слайдера в место первого слайда
+            this.movePosition(this.currentId);
+        } else {
+            this.$block.style.left = '0px';
         }
 
-        // смещение слайдера в место первого слайда
-        this.$block.style.left =
-            parseInt(this.blockStyles.left, 10) -
-            parseInt(this.slideStyles.width, 10) * (this.currentId - 1) +
-            'px';
+        // default speed: 0.3s
+        this.$block.style.transitionDuration = this.options.speed / 1000 + 's';
     }
 
     #changeCurrentSlider() {
@@ -176,60 +181,42 @@ export default class Carousel {
             this.next();
         } else if (type === 'btn-prev') {
             this.prev();
+        } else if (type === 'thumbnail') {
+            this.movePosition(+event.target.dataset.id);
         }
-        this.#changeCurrentSlider();
     }
 
-    animation(direction) {
+    movePosition(pos) {
         if (!this.inAnimation) {
             const t = setTimeout(() => {
                 this.inAnimation = false;
                 clearTimeout(t);
             }, this.options.speed);
-            this.$block.style.left = this.#calculateMove(direction);
+            this.$block.style.left = -this.#calculateMove(pos) + 'px';
             this.inAnimation = true;
+            this.#changeCurrentSlider();
         }
     }
 
-    #calculateMove(dir) {
-        if (dir === 'next') {
-            if (this.$images.length === this.currentId) {
-                this.currentId = 1;
-                return '0px';
-            } else {
-                ++this.currentId;
-                return (
-                    parseInt(this.blockStyles.left, 10) -
-                    parseInt(this.slideStyles.width, 10) +
-                    'px'
-                );
-            }
-        } else if (dir === 'prev') {
-            if (this.currentId === 1) {
-                this.currentId = this.$images.length;
-                return (
-                    parseInt(this.blockStyles.left, 10) -
-                    parseInt(this.slideStyles.width, 10) *
-                        (this.currentId - 1) +
-                    'px'
-                );
-            } else {
-                --this.currentId;
-                return (
-                    parseInt(this.blockStyles.left, 10) +
-                    parseInt(this.slideStyles.width, 10) +
-                    'px'
-                );
-            }
+    #calculateMove(pos) {
+        if (pos === 1 || pos > this.$images.length) {
+            this.currentId = 1;
+            return 0;
+        } else if (pos < 1) {
+            this.currentId = this.$images.length;
+        } else {
+            this.currentId = pos;
         }
+
+        return parseInt(this.slideStyles.width, 10) * (this.currentId - 1);
     }
 
     next() {
-        this.animation('next');
+        this.movePosition(this.currentId + 1);
     }
 
     prev() {
-        this.animation('prev');
+        this.movePosition(this.currentId - 1);
     }
 
     destroy() {
