@@ -16,43 +16,48 @@
     }
     &__thumbnails {
         position: absolute;
-        bottom: 0;
         left: 0;
-        right: 0;
+        bottom: 0;
         display: flex;
         justify-content: flex-start;
-        background-color: rgba(0, 0, 0, 0.7);
-        height: 15%;
-        max-width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        height: 60px;
+        min-width: 100%;
         z-index: 10;
         padding: 1px;
+        transition: left 0.3s;
 
         &--lines {
             width: auto;
+            max-width: 100%;
+            min-width: auto;
+            left: 0;
+            right: 0;
             height: 20px;
-            justify-content: center;
+            justify-content: flex-start;
             padding: 0 10px;
             background-color: rgba(0, 0, 0, 0);
 
             .carousel__thumbnail {
-                max-width: 100%;
                 flex-grow: 1;
                 height: 4px;
                 border-radius: 5px;
                 margin: 3px;
                 background-color: white;
+                min-width: auto;
             }
         }
     }
     &__thumbnail {
         max-width: 100px;
+        min-width: 100px;
         height: 100%;
         width: 100%;
         flex-grow: 0;
         margin: 1px;
         background-size: cover;
         opacity: 0.4;
-        transition: 0.3s;
+        transition: 0.2s;
         cursor: pointer;
 
         &.current {

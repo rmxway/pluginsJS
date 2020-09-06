@@ -2,6 +2,7 @@ import Select from './select_plugin/index.js';
 import Carousel from './carusel_plugin/index.js';
 import styles from './scss/style.scss';
 
+// plugin of Select
 const select = new Select({
     id: 'select',
     //selectedId: '2',
@@ -17,14 +18,15 @@ const select = new Select({
     ],
 });
 
+// plugin of Carousel
 const slider = new Carousel('#slider', {
     speed: 500,
     auto: true,
-    delay: 4000,
+    delay: 3000,
     //arrows: false,
     //first: 3,
     thumbnail: true,
-    thumbLines: true,
+    //thumbLines: true,
 
     //осталось сделать
 

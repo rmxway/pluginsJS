@@ -30,7 +30,7 @@ function createTemplate(images, first, arrows, thumbnail, thumbLines) {
             ${
                 thumbnail &&
                 `<div class="carousel__thumbnails ${
-                    thumbLines && `carousel__thumbnails--lines`
+                    thumbLines ? `carousel__thumbnails--lines` : ''
                 }">
                     ${images
                         .map((image, index) => {
@@ -78,6 +78,10 @@ export default class Carousel {
         this.$el = document.querySelector(selectId);
         this.$el.classList.add('carousel');
         this.$images = Array.from(this.$el.querySelectorAll('img'));
+        this.options.thumbnail &&
+            (this.$thumbnails = Array.from(
+                this.$el.querySelectorAll('.carousel__thumbnail')
+            ));
 
         this.#render();
 
@@ -88,6 +92,9 @@ export default class Carousel {
         }
 
         if (this.options.thumbnail) {
+            this.$thumbnailBlock = this.$el.querySelector(
+                '.carousel__thumbnails'
+            );
             this.$thumbnails = Array.from(
                 this.$el.querySelectorAll('.carousel__thumbnail')
             );
@@ -156,13 +163,10 @@ export default class Carousel {
             .find((item) => parseInt(item.dataset.id, 10) === this.currentId)
             .classList.add('current');
         if (this.options.thumbnail) {
-            const thumbnails = Array.from(
-                this.$el.querySelectorAll('.carousel__thumbnail')
-            );
-            thumbnails.forEach((item) => {
+            this.$thumbnails.forEach((item) => {
                 item.classList.remove('current');
             });
-            thumbnails
+            this.$thumbnails
                 .find(
                     (item) => parseInt(item.dataset.id, 10) === this.currentId
                 )
@@ -183,12 +187,13 @@ export default class Carousel {
 
     handleClick(event) {
         const { type } = event.target.dataset;
+        const id = event.target.dataset.id;
         if (type === 'btn-next') {
             this.next();
         } else if (type === 'btn-prev') {
             this.prev();
         } else if (type === 'thumbnail') {
-            this.movePosition(+event.target.dataset.id);
+            this.movePosition(+id);
         }
     }
 
@@ -199,6 +204,33 @@ export default class Carousel {
                 clearTimeout(t);
             }, this.options.speed);
             this.$block.style.left = -this.#calculateMove(pos) + 'px';
+            if (this.options.thumbnail && !this.options.thumbLines) {
+                // Ширина миниатюры 100px
+                const widthThumb = 100;
+                const widthSlide = parseInt(this.slideStyles.width, 10);
+                const maxId = Math.floor(widthSlide / widthThumb);
+                const partThumb = widthThumb * (maxId + 1) - widthSlide + 17;
+                // console.log(widthSlide); //644
+                // console.log(this.currentId * widthThumb);
+                // console.log(maxId);
+                // console.log(partThumb);
+                if (this.currentId === maxId) {
+                    this.$thumbnailBlock.style.left = -partThumb + 'px';
+                } else if (
+                    this.currentId > maxId &&
+                    !(this.currentId === this.$images.length)
+                ) {
+                    this.$thumbnailBlock.style.left =
+                        -partThumb -
+                        widthThumb * (this.currentId - maxId) +
+                        'px';
+                } else if (this.currentId === this.$images.length) {
+                    this.$thumbnailBlock.style.left =
+                        -this.$thumbnailBlock.clientWidth + widthSlide + 'px';
+                } else {
+                    this.$thumbnailBlock.style.left = '0px';
+                }
+            }
             this.inAnimation = true;
             this.#changeCurrentSlider();
         }
