@@ -11,8 +11,24 @@
     }
     &__block {
         position: relative;
+        left: 0;
         display: flex;
         flex-wrap: nowrap;
+
+        &.fade {
+            display: block;
+            .carousel__slider {
+                position: absolute;
+                left: 0;
+                top: 0;
+                opacity: 0;
+                animation: scaleIn 14s infinite ease-in-out;
+                animation-direction: alternate;
+                &.current {
+                    opacity: 1;
+                }
+            }
+        }
     }
     &__thumbnails {
         position: absolute;

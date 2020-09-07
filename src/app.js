@@ -24,14 +24,10 @@ const slider = new Carousel('#slider', {
     auto: true,
     delay: 3000,
     //arrows: false,
-    //first: 3,
+    //first: 4,
     thumbnail: true,
     //thumbLines: true,
-
-    //осталось сделать
-
-    //mode: 'slide'; //opt: fade
-    //orientation: 'horizontal' //opt: vertical
+    mode: 'fade', //default 'slide
 });
 
 window.s = slider;

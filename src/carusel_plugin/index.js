@@ -25,13 +25,12 @@ function createTemplate(images, first, arrows, thumbnail, thumbLines) {
             })
             .join('')}
     `;
-    const imagesObj = (Object.from = images);
     const thumbnailTamplate = `
             ${
-                thumbnail &&
-                `<div class="carousel__thumbnails ${
-                    thumbLines ? `carousel__thumbnails--lines` : ''
-                }">
+                thumbnail
+                    ? `<div class="carousel__thumbnails ${
+                          thumbLines ? `carousel__thumbnails--lines` : ''
+                      }">
                     ${images
                         .map((image, index) => {
                             return `
@@ -42,13 +41,14 @@ function createTemplate(images, first, arrows, thumbnail, thumbLines) {
                             }" data-id="${index + 1}" data-type="thumbnail"
                                 ${
                                     !thumbLines &&
-                                    `style="background-image: url('${imagesObj[index].attributes.src.value}')"`
+                                    `style="background-image: url('${images[index].attributes.src.value}')"`
                                 }>
                             </div>
                         `;
                         })
                         .join('')}
                 </div>`
+                    : ''
             }
     `;
     return `
@@ -67,9 +67,10 @@ export default class Carousel {
         this.options = options;
         this.options.speed = options.speed || 300;
         this.options.auto = options.auto || false;
-        this.options.delay = options.delay || 3000;
+        this.options.delay = options.delay || 4000;
         this.options.thumbnail = options.thumbnail || false;
         this.options.thumbLines = options.thumbLines || false;
+        this.options.mode = options.mode || 'slide';
 
         this.autoplayInterval;
         this.inAnimation = false;
@@ -78,12 +79,18 @@ export default class Carousel {
         this.$el = document.querySelector(selectId);
         this.$el.classList.add('carousel');
         this.$images = Array.from(this.$el.querySelectorAll('img'));
-        this.options.thumbnail &&
-            (this.$thumbnails = Array.from(
-                this.$el.querySelectorAll('.carousel__thumbnail')
-            ));
 
         this.#render();
+
+        //Thumbnails
+        if (this.options.thumbnail) {
+            this.$thumbnails = Array.from(
+                this.$el.querySelectorAll('.carousel__thumbnail')
+            );
+            this.$thumbnailBlock = this.$el.querySelector(
+                '.carousel__thumbnails'
+            );
+        }
 
         // Arrows of carousel
         if (this.options.arrows) {
@@ -91,15 +98,10 @@ export default class Carousel {
             this.$prev = this.$el.querySelector('.carousel__arrows-left');
         }
 
-        if (this.options.thumbnail) {
-            this.$thumbnailBlock = this.$el.querySelector(
-                '.carousel__thumbnails'
-            );
-            this.$thumbnails = Array.from(
-                this.$el.querySelectorAll('.carousel__thumbnail')
-            );
-            //console.log(this.$thumbnails);
-        }
+        // Slides
+        this.$slides = Array.from(
+            this.$el.querySelectorAll('.carousel__slider')
+        );
 
         // Block with images & styles
         this.$block = this.$el.querySelector('.carousel__block');
@@ -109,6 +111,15 @@ export default class Carousel {
             this.$el.querySelector('.carousel__slider'),
             null
         );
+
+        //Fade mode
+        if (this.options.mode === 'fade') {
+            setTimeout(() => {
+                this.$block.style.width = this.slideStyles.width;
+                this.$block.style.height = this.slideStyles.height;
+                this.$block.classList.add('fade');
+            }, 0);
+        }
 
         this.handleClick = this.handleClick.bind(this);
 
@@ -140,26 +151,28 @@ export default class Carousel {
     }
 
     #firstPosition() {
-        if (this.options.first) {
-            this.currentId = this.options.first;
-            // смещение слайдера в место первого слайда
-            this.movePosition(this.currentId);
-        } else {
-            this.$block.style.left = '0px';
-        }
+        if (this.options.first) this.currentId = this.options.first;
 
+        // смещение слайдера в место первого слайда
+        this.movePosition(this.currentId);
         // default speed: 0.3s
-        this.$block.style.transitionDuration = this.options.speed / 1000 + 's';
+        if (this.options.mode === 'slide') {
+            this.$block.style.transitionDuration =
+                this.options.speed / 1000 + 's';
+        } else {
+            this.$slides.map(
+                (item) =>
+                    (item.style.transitionDuration =
+                        this.options.speed / 1000 + 's')
+            );
+        }
     }
 
     #changeCurrentSlider() {
-        const slides = Array.from(
-            this.$el.querySelectorAll('.carousel__slider')
-        );
-        slides.forEach((item) => {
+        this.$slides.forEach((item) => {
             item.classList.remove('current');
         });
-        slides
+        this.$slides
             .find((item) => parseInt(item.dataset.id, 10) === this.currentId)
             .classList.add('current');
         if (this.options.thumbnail) {
@@ -203,49 +216,52 @@ export default class Carousel {
                 this.inAnimation = false;
                 clearTimeout(t);
             }, this.options.speed);
-            this.$block.style.left = -this.#calculateMove(pos) + 'px';
-            if (this.options.thumbnail && !this.options.thumbLines) {
-                // Ширина миниатюры 100px
-                const widthThumb = 100;
-                const widthSlide = parseInt(this.slideStyles.width, 10);
-                const maxId = Math.floor(widthSlide / widthThumb);
-                const partThumb = widthThumb * (maxId + 1) - widthSlide + 17;
-                // console.log(widthSlide); //644
-                // console.log(this.currentId * widthThumb);
-                // console.log(maxId);
-                // console.log(partThumb);
-                if (this.currentId === maxId) {
-                    this.$thumbnailBlock.style.left = -partThumb + 'px';
-                } else if (
-                    this.currentId > maxId &&
-                    !(this.currentId === this.$images.length)
-                ) {
-                    this.$thumbnailBlock.style.left =
-                        -partThumb -
-                        widthThumb * (this.currentId - maxId) +
-                        'px';
-                } else if (this.currentId === this.$images.length) {
-                    this.$thumbnailBlock.style.left =
-                        -this.$thumbnailBlock.clientWidth + widthSlide + 'px';
-                } else {
-                    this.$thumbnailBlock.style.left = '0px';
-                }
+
+            if (pos === 1 || pos > this.$images.length) {
+                this.currentId = 1;
+            } else if (pos < 1) {
+                this.currentId = this.$images.length;
+            } else {
+                this.currentId = pos;
             }
+
+            this.options.mode === 'slide'
+                ? (this.$block.style.left = -this.#calculateMove() + 'px')
+                : null;
+
+            this.#moveThumbnail();
+
             this.inAnimation = true;
             this.#changeCurrentSlider();
         }
     }
 
-    #calculateMove(pos) {
-        if (pos === 1 || pos > this.$images.length) {
-            this.currentId = 1;
-            return 0;
-        } else if (pos < 1) {
-            this.currentId = this.$images.length;
-        } else {
-            this.currentId = pos;
-        }
+    #moveThumbnail() {
+        if (this.options.thumbnail && !this.options.thumbLines) {
+            // Ширина миниатюры 100px
+            const widthThumb = 100;
+            const widthSlide = parseInt(this.slideStyles.width, 10);
+            const maxId = Math.floor(widthSlide / widthThumb);
+            const partThumb = widthThumb * (maxId + 1) - widthSlide + 17;
 
+            if (this.currentId === maxId) {
+                this.$thumbnailBlock.style.left = -partThumb + 'px';
+            } else if (
+                this.currentId > maxId &&
+                !(this.currentId === this.$images.length)
+            ) {
+                this.$thumbnailBlock.style.left =
+                    -partThumb - widthThumb * (this.currentId - maxId) + 'px';
+            } else if (this.currentId === this.$images.length) {
+                this.$thumbnailBlock.style.left =
+                    -this.$thumbnailBlock.clientWidth + widthSlide + 'px';
+            } else {
+                this.$thumbnailBlock.style.left = '0px';
+            }
+        }
+    }
+
+    #calculateMove() {
         return parseInt(this.slideStyles.width, 10) * (this.currentId - 1);
     }
 
