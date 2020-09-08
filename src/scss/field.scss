@@ -1,0 +1,33 @@
+.field {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #222;
+    border: 1px solid darken($secondary-color, 15%);
+    border-radius: 5px;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    label {
+        top: -17px;
+        left: 0;
+        font-size: 12px;
+        position: absolute;
+    }
+
+    input {
+        padding: 10px;
+        background: none;
+        width: 100%;
+
+        &,
+        &:focus,
+        &:active,
+        &::selection {
+            border: none;
+            outline: none;
+        }
+    }
+}

@@ -112,19 +112,24 @@ export default class Carousel {
             null
         );
 
+        // First Position Carousel
+        this.#firstPosition();
+
         //Fade mode
         if (this.options.mode === 'fade') {
+            this.$block.classList.add('fade');
             setTimeout(() => {
                 this.$block.style.width = this.slideStyles.width;
                 this.$block.style.height = this.slideStyles.height;
-                this.$block.classList.add('fade');
+                this.$slides.forEach(
+                    (item) =>
+                        (item.style.transitionDuration =
+                            this.options.speed / 1000 + 's')
+                );
             }, 0);
         }
 
         this.handleClick = this.handleClick.bind(this);
-
-        // First Position Carousel
-        this.#firstPosition();
 
         // Autoplay
         if (this.options.auto) {
@@ -159,12 +164,6 @@ export default class Carousel {
         if (this.options.mode === 'slide') {
             this.$block.style.transitionDuration =
                 this.options.speed / 1000 + 's';
-        } else {
-            this.$slides.map(
-                (item) =>
-                    (item.style.transitionDuration =
-                        this.options.speed / 1000 + 's')
-            );
         }
     }
 

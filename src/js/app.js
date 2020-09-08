@@ -1,6 +1,6 @@
 import Select from './select_plugin/index.js';
 import Carousel from './carusel_plugin/index.js';
-import styles from './scss/style.scss';
+import styles from '../scss/style.scss';
 
 // plugin of Select
 const select = new Select({

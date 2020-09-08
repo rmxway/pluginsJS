@@ -14,7 +14,7 @@ const filename = (name, ext) =>
 
 module.exports = {
     mode: 'development',
-    entry: path.resolve(__dirname, 'src/app.js'),
+    entry: path.resolve(__dirname, 'src/js/app.js'),
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: filename('bundle', 'js'),
