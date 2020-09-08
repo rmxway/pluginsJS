@@ -21,7 +21,8 @@ module.exports = {
     },
     devServer: {
         port: 4000,
-        hot: isDev,
+        host: '0.0.0.0',
+        watchContentBase: true,
     },
     plugins: [
         new HTMLWebpackPlugin({
@@ -46,6 +47,10 @@ module.exports = {
     ],
     module: {
         rules: [
+            {
+                test: /\.html$/,
+                use: ['html-loader'],
+            },
             {
                 test: /\.css$/i,
                 // css-loader позволяет понимать import '*.css' в js файлах

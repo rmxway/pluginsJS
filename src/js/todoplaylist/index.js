@@ -1,14 +1,5 @@
 import Field from '../field/index.js';
 
-// plugins of Field
-// const songField = new Field('#song-name', {
-//     placeholder: 'Название композиции',
-// });
-
-// const autorField = new Field('#autor-name', {
-//     placeholder: 'Автор композиции',
-// });
-
 const createTemplate = function (inputs) {
     const itemsTemplate = inputs
         .map((item, index) => {
@@ -16,10 +7,24 @@ const createTemplate = function (inputs) {
         })
         .join('');
     return `
+        <span class="todo-playlist__title">Добавить новый трек</span>
         <div class="field-block flex">
             ${itemsTemplate}
         </div>
         <button class="btn" data-type="button-add">Добавить</button>
+        <span class="todo-playlist__title">Список треков</span>
+        <ul class="todo-playlist__list">
+            <li class="todo-playlist__item">
+                <div class="todo-playlist__item__song">1. Это не любовь</div>
+                <div class="todo-playlist__item__autor">Кино</div>
+                <div class="todo-playlist__item__close"></div>
+            </li>
+            <li class="todo-playlist__item">
+                <div class="todo-playlist__item__song">2. Call you back</div>
+                <div class="todo-playlist__item__autor">Josh Butler</div>
+                <div class="todo-playlist__item__close"></div>
+            </li>
+        </ul>
     `;
 };
 

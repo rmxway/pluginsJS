@@ -1,15 +1,15 @@
 {
-    "name": "selectjs",
+    "name": "pluginsjs",
     "version": "1.0.0",
-    "description": "Select plugin",
+    "description": "Plugins",
     "main": "app.js",
     "scripts": {
-        "dev": "cross-env NODE_ENV=development webpack --mode development",
-        "build": "cross-env NODE_ENV=production webpack --mode production",
-        "start": "cross-env NODE_ENV=development webpack-dev-server --open --mode development"
+        "dev": "cross-env NODE_ENV=development webpack",
+        "build": "cross-env NODE_ENV=production webpack",
+        "start": "cross-env NODE_ENV=development webpack-dev-server --open --hot --inline"
     },
     "keywords": [
-        "js"
+        "js plugin"
     ],
     "author": "Dovgan Evgeny",
     "license": "ISC",
