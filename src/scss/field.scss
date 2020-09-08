@@ -4,23 +4,36 @@
     color: #222;
     border: 1px solid darken($secondary-color, 15%);
     border-radius: 5px;
-    min-width: 300px;
+    min-width: 200px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+    margin: 10px;
+
+    &.focus {
+        border-color: $secondary-color;
+
+        label {
+            top: -17px;
+            left: 0;
+        }
+    }
 
     label {
-        top: -17px;
-        left: 0;
+        top: 10px;
+        left: 10px;
         font-size: 12px;
         position: absolute;
+        z-index: 0;
+        transition: 0.3s;
     }
 
     input {
         padding: 10px;
         background: none;
         width: 100%;
+        z-index: 1;
 
         &,
         &:focus,

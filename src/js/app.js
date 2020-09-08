@@ -1,5 +1,6 @@
-import Select from './select_plugin/index.js';
-import Carousel from './carusel_plugin/index.js';
+import Select from './select/index.js';
+import Carousel from './carusel/index.js';
+import Field from './field/index.js';
 import styles from '../scss/style.scss';
 
 // plugin of Select
@@ -28,6 +29,17 @@ const slider = new Carousel('#slider', {
     thumbnail: true,
     //thumbLines: true,
     mode: 'fade', //default 'slide
+});
+
+// Todo block --------------------
+
+// plugins of Field
+const songField = new Field('#song-name', {
+    placeholder: 'Название композиции',
+});
+
+const autorField = new Field('#autor-name', {
+    placeholder: 'Автор композиции',
 });
 
 window.s = slider;
