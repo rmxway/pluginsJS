@@ -6,20 +6,34 @@ const createTemplate = function (placeholder, name) {
 };
 
 export default class Field {
-    constructor(selectedId, options) {
+    constructor(selectedId, placeholder) {
         this.selectedId = selectedId;
-        this.options = options;
+        this.placeholder = placeholder;
         this.name = this.#camelize(selectedId);
+        this.value = '';
 
-        this.$el = document.querySelector(selectedId);
+        this.$el = document.getElementById(selectedId);
         this.$el.classList.add('field');
 
         this.#render();
+
+        // добавление анимации при фокусе
+        this.$input = this.$el.querySelector('#' + this.name);
+
+        this.$input.onfocus = () => {
+            this.$el.classList.add('focus');
+        };
+        this.$input.onblur = () => {
+            if (this.value.length === 0) this.$el.classList.remove('focus');
+        };
+
+        this.$input.oninput = (e) => {
+            this.value = e.target.value;
+        };
     }
 
     #render() {
-        const { placeholder } = this.options;
-        this.$el.innerHTML = createTemplate(placeholder, this.name);
+        this.$el.innerHTML = createTemplate(this.placeholder, this.name);
     }
 
     // делает из строчки #text-name > textName

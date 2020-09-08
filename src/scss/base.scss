@@ -1,5 +1,12 @@
-body {
+body * {
     font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+
+    &::selection {
+        background-color: $secondary-color;
+    }
+}
+body {
     margin: 0;
     padding: 0;
     //background-color: $secondary-color;
@@ -16,6 +23,11 @@ body {
     max-width: 1000px;
     margin: 0 auto;
     padding: 15px;
+}
+
+.field-block {
+    min-width: 410px;
+    margin: 0 -5px;
 }
 
 .slider-block {
@@ -49,4 +61,30 @@ body {
 .line {
     border-bottom: 1px solid #fff;
     margin-bottom: $padding;
+}
+
+.btn {
+    position: relative;
+    background-color: darken($secondary-color, 30%);
+    color: white;
+    border: none;
+    outline: none;
+    //border: 1px solid darken($secondary-color, 15%);
+    border-radius: 5px;
+    width: 100%;
+    display: block;
+    padding: 12px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: 0.3s;
+
+    &:hover {
+        background-color: darken($secondary-color, 20%);
+    }
+
+    &:active {
+        transition-duration: 0s;
+        top: 1px;
+        background-color: darken($secondary-color, 15%);
+    }
 }

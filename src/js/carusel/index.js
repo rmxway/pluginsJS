@@ -241,7 +241,7 @@ export default class Carousel {
             const widthThumb = 100;
             const widthSlide = parseInt(this.slideStyles.width, 10);
             const maxId = Math.floor(widthSlide / widthThumb);
-            const partThumb = widthThumb * (maxId + 1) - widthSlide + 17;
+            const partThumb = widthThumb * (maxId + 1) - widthSlide + 15;
 
             if (this.currentId === maxId) {
                 this.$thumbnailBlock.style.left = -partThumb + 'px';
