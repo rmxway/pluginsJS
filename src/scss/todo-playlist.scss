@@ -1,3 +1,6 @@
+#list {
+    position: relative;
+}
 .todo-playlist {
     &__title {
         font-family: 'Roboto' sans-serif;
@@ -6,6 +9,12 @@
         margin-top: 30px;
         font-size: 20px;
         font-weight: 100;
+    }
+    &__clear {
+        position: absolute;
+        right: 0;
+        top: 4px;
+        color: #222;
     }
     &__list {
         max-width: 100%;
@@ -21,22 +30,41 @@
         flex-wrap: nowrap;
         background-color: #fff;
         border-radius: 5px;
-        padding: 5px 10px;
+        padding: 10px;
         line-height: 1;
         color: #333;
-        margin-bottom: 10px;
+        margin-bottom: 2px;
         box-shadow: 0 1px 2px #00000053;
         &__song {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
             text-transform: uppercase;
-            font-weight: 100;
             font-size: 12px;
-            letter-spacing: 1px;
+
+            span {
+                display: flex;
+                font-size: 14px;
+                font-weight: 400;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+                border-radius: 50%;
+                border: 1px solid #33333334;
+                line-height: 1;
+                width: 15px;
+                height: 15px;
+                padding: 1px;
+                background-color: #888;
+                color: #ddd;
+                margin-right: 10px;
+            }
         }
         &__autor {
-            font-weight: 300;
-            margin-left: 10px;
+            font-weight: 400;
+            margin-left: 5px;
             flex-grow: 1;
-            font-size: 13px;
+            font-size: 12px;
         }
         &__close {
             @extend .fa, .fa-close;

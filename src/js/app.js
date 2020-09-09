@@ -28,7 +28,7 @@ if (document.getElementById('slider')) {
         //arrows: false,
         //first: 4,
         thumbnail: true,
-        //thumbLines: true,
+        thumbLines: true,
         mode: 'fade', //default 'slide
     });
 
