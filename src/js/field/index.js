@@ -20,16 +20,28 @@ export default class Field {
         // добавление анимации при фокусе
         this.$input = this.$el.querySelector('#' + this.name);
 
-        this.$input.onfocus = () => {
-            this.$el.classList.add('focus');
-        };
-        this.$input.onblur = () => {
-            if (this.value.length === 0) this.$el.classList.remove('focus');
-        };
+        this.onBlur = this.onBlur.bind(this);
+        this.onFocus = this.onFocus.bind(this);
+        this.$input.onfocus = this.onFocus;
+        this.$input.onblur = this.onBlur;
 
         this.$input.oninput = (e) => {
             this.value = e.target.value;
         };
+    }
+
+    onFocus() {
+        this.$el.classList.add('focus');
+    }
+
+    onBlur() {
+        if (this.value.length === 0) this.$el.classList.remove('focus');
+    }
+
+    clear() {
+        this.value = '';
+        this.$input.value = '';
+        this.onBlur();
     }
 
     #render() {
@@ -42,7 +54,7 @@ export default class Field {
         let capital = arr.map((item, index) =>
             index
                 ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
-                : item.slice(1)
+                : item
         );
         let capitalString = capital.join('');
         return capitalString;

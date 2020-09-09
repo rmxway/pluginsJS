@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    margin: 10px 5px;
+    margin: 20px 5px;
 
     &.focus {
         border-color: adjust-hue($secondary-color, 45%);
@@ -27,7 +27,7 @@
         font-size: 12px;
         position: absolute;
         z-index: 0;
-        transition: 0.3s;
+        transition: 0.1s;
     }
 
     input {

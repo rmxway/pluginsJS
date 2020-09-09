@@ -26,13 +26,16 @@ module.exports = {
     },
     plugins: [
         new HTMLWebpackPlugin({
-            title: 'MyApp',
+            title: 'Plugins JS',
+            filename: path.resolve(__dirname, 'dist/index.html'),
             template: path.resolve(__dirname, 'src/index.html'),
             minify: {
                 collapseWhitespace: isProd,
             },
         }),
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({
+            dry: isDev,
+        }),
         new MiniCssExtractPlugin({
             filename: filename('style', 'css'),
         }),
