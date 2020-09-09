@@ -1,18 +1,8 @@
 import Field from '../field/index.js';
 
-let playlist = [];
-let playlistJSON;
-
-function getList() {
-    // Получение JSON из localStorage
-    playlist = localStorage.getItem('playlist');
-    playlistJSON = JSON.parse(playlist);
-}
-
 // создание HTML Шаблона
 
-const createTemplate = function (inputs) {
-    getList();
+const createTemplate = function (inputs, playlistJSON) {
     const inputTemplate = inputs
         .map((item, index) => {
             return `<div id="${item.id}" data-id="${index + 1}"></div>`;
@@ -56,9 +46,13 @@ export default class TodoPlaylist {
     constructor(selectedId, inputs) {
         this.inputs = inputs;
 
-        this.$fields = [];
+        this.playlist;
+        this.playlistJSON;
 
+        this.$fields = [];
         this.$el = document.querySelector(selectedId);
+
+        this.#getList();
 
         this.#render();
 
@@ -69,8 +63,14 @@ export default class TodoPlaylist {
         this.$buttonAdd.addEventListener('click', this.handlerAdd);
     }
 
+    #getList() {
+        // Получение JSON из localStorage
+        this.playlist = localStorage.getItem('playlist');
+        this.playlistJSON = JSON.parse(this.playlist);
+    }
+
     #render() {
-        this.$el.innerHTML = createTemplate(this.inputs);
+        this.$el.innerHTML = createTemplate(this.inputs, this.playlistJSON);
         this.inputs.forEach(
             (item, index) =>
                 (this.$fields[index] = new Field(item.id, item.placeholder))
@@ -80,8 +80,7 @@ export default class TodoPlaylist {
     handlerAdd() {
         // playlist = [{"songName":"Dont Stop", "autorName":"Dovgan Evgeny"}]
         let card = {};
-        let currentList = JSON.parse(playlist);
-        console.log(currentList);
+        let currentList = JSON.parse(this.playlist) || [];
         this.$fields.forEach((item, index) => {
             if (this.$fields[index].value) {
                 card[this.$fields[index].name] = this.$fields[index].value;
@@ -90,8 +89,9 @@ export default class TodoPlaylist {
         });
         if (card.songName || card.autorName) {
             currentList.push(card);
+            console.log(currentList);
             localStorage.setItem('playlist', JSON.stringify(currentList));
-
+            this.#getList();
             this.#render();
         }
     }

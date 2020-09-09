@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack --watch",
         "build": "webpack cross-env NODE_ENV=production",
-        "start": "cross-env NODE_ENV=development webpack-dev-server --open --hot --inline"
+        "start": "cross-env NODE_ENV=development webpack-dev-server --open"
     },
     "keywords": [
         "js plugin"
