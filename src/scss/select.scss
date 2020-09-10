@@ -17,7 +17,7 @@
     }
 
     &__input {
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: lighten($secondary-color, 40%);
         color: #222;
         border: 1px solid darken($secondary-color, 15%);
         border-radius: 5px;
@@ -26,9 +26,10 @@
         align-items: center;
         justify-content: space-between;
         cursor: pointer;
+        font-weight: 400;
 
         span {
-            font-size: 10px;
+            font-size: 12px;
             transform: rotate(0deg);
             transition: 0.3s;
         }
@@ -44,7 +45,7 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.1s;
-        background-color: white;
+        background-color: lighten($secondary-color, 40%);
         left: 0;
         right: 0;
         top: 100%;
@@ -54,7 +55,7 @@
         border: 1px solid darken($secondary-color, 15%);
         border-top: none;
         border-radius: 0 0 5px 5px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.35);
 
         ul {
             list-style: none;
@@ -63,15 +64,16 @@
             li {
                 cursor: pointer;
                 padding: 10px 15px;
-                border-bottom: 1px solid #eee;
+                border-bottom: 1px solid rgb(180, 196, 195);
                 color: #222;
+                transition: 0.15s;
 
                 &:last-child {
                     border-bottom: none;
                 }
 
                 &:hover {
-                    background-color: #f9f9f9;
+                    background-color: lighten($secondary-color, 30%);
                 }
 
                 &.active {

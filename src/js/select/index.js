@@ -18,7 +18,7 @@ const createTemplateSelect = function (placeholder, data = [], selectedId) {
         <div class="select__overlay" data-type="overlay"></div> 
         <div class="select__input" data-type="input">
             <div>${textPlaceholder}</div>
-            <span>▼</span>
+            <span class="fa fa-chevron-down"></span>
         </div>
         <div class="select__dropdown">
             <ul>

@@ -39,14 +39,14 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: filename('style', 'css'),
         }),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: path.resolve(__dirname, 'src/img'),
-                    to: path.resolve(__dirname, 'dist/img'),
-                },
-            ],
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {
+        //             from: path.resolve(__dirname, 'src/img'),
+        //             to: path.resolve(__dirname, 'dist/img'),
+        //         },
+        //     ],
+        // }),
     ],
     module: {
         rules: [
@@ -63,11 +63,17 @@ module.exports = {
             },
             {
                 test: /\.(ttf|woff|woff2|eot|svg)$/i,
-                use: ['file-loader'],
+                loader: 'file-loader',
+                options: {
+                    name: 'fonts/[name].[ext]',
+                },
             },
             {
                 test: /\.(jpg|jpeg|png|tiff|gif)$/i,
-                use: ['file-loader'],
+                loader: 'file-loader',
+                options: {
+                    name: 'img/[name].[ext]',
+                },
             },
             {
                 test: /\.s[ac]ss$/i,
@@ -75,11 +81,17 @@ module.exports = {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
-                            hmr: isDev,
+                            //hmr: isDev,
                             reloadAll: true,
                         },
                     },
                     'css-loader',
+                    {
+                        loader: 'resolve-url-loader',
+                        // options: {
+                        //     root: '',
+                        // },
+                    },
                     'sass-loader',
                 ],
             },

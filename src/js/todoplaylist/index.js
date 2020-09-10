@@ -24,21 +24,26 @@ const listTemplate = function (playlistJSON) {
         playlistJSON !== null
             ? `
         <span class="todo-playlist__title">Список треков</span>
-        <a href="" class="todo-playlist__clear" data-type="clear-list">Очистить список</a>
+        <div class="todo-playlist__clear fa fa-trash-o" data-type="clear-list"></div>
         <ul class="todo-playlist__list">
         ${playlistJSON
             .map((item, index) => {
                 return `
                 <li class="todo-playlist__item" data-id="${index + 1}">
-                    <div class="todo-playlist__item__song">
-                        <span>${index + 1}</span> ${
-                    item.songName ? item.songName : ''
-                }
+                <div class="todo-playlist__item__number">${index + 1}</div>
+                    ${
+                        item.songName
+                            ? `<div class="todo-playlist__item__song">${item.songName.trim()}</div>`
+                            : ''
+                    }
+                    ${
+                        item.autorName
+                            ? `<div class="todo-playlist__item__autor">${item.autorName.trim()}</div>`
+                            : ''
+                    }
+                    <div class="todo-playlist__item__close">
+                        <i class="fa fa-close"></i>
                     </div>
-                    <div class="todo-playlist__item__autor">
-                        ${item.autorName ? item.autorName : ''}
-                    </div>
-                    <div class="todo-playlist__item__close"></div>
                 </li>
             `;
             })
