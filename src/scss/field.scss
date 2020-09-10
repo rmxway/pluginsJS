@@ -1,6 +1,6 @@
 .field {
     position: relative;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: lighten($secondary-color, 40%);
     color: #222;
     border: 1px solid darken($secondary-color, 15%);
     border-radius: 5px;
@@ -24,9 +24,10 @@
     label {
         top: 13px;
         left: 10px;
-        font-size: 12px;
         position: absolute;
         z-index: 0;
+        font-weight: 400;
+        font-size: 12px;
         transition: 0.1s;
     }
 
@@ -36,6 +37,8 @@
         height: 100%;
         width: 100%;
         z-index: 1;
+        font-weight: 400;
+        font-size: 14px;
 
         &,
         &:focus,

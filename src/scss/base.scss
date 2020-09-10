@@ -1,4 +1,4 @@
-body * {
+body {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 300;
@@ -6,15 +6,13 @@ body * {
     &::selection {
         background-color: $secondary-color;
     }
-}
-body {
     margin: 0;
     padding: 0;
     //background-color: $secondary-color;
     background-image: linear-gradient(
         -90deg,
         $secondary-color 0%,
-        adjust-hue($secondary-color, 10%) 100%
+        adjust-hue($secondary-color, 20%) 100%
     );
     color: #fff;
     overflow-y: scroll;
@@ -47,7 +45,7 @@ body {
     font-size: 40px;
     font-weight: 100;
     letter-spacing: -1px;
-    color: #fff;
+    color: lighten($secondary-color, 40%);
     margin-bottom: $padding;
 
     span {
@@ -55,7 +53,7 @@ body {
         font-size: 15px;
         letter-spacing: 0;
         font-weight: 900;
-        color: darken($secondary-color, 30%);
+        color: darken($secondary-color, 40%);
     }
 }
 
@@ -76,7 +74,7 @@ body {
     display: block;
     padding: 12px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     transition: 0.3s;
 
     &:hover {
