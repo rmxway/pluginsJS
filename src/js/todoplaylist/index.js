@@ -29,8 +29,8 @@ const listTemplate = function (playlistJSON) {
         ${playlistJSON
             .map((item, index) => {
                 return `
-                <li class="todo-playlist__item" data-id="${index + 1}">
-                <div class="todo-playlist__item__number">${index + 1}</div>
+                <li class="todo-playlist__item" data-id="${index}" data-type="list-item">
+                    <div class="todo-playlist__item__number">${index + 1}</div>
                     ${
                         item.songName
                             ? `<div class="todo-playlist__item__song">${item.songName.trim()}</div>`
@@ -41,9 +41,7 @@ const listTemplate = function (playlistJSON) {
                             ? `<div class="todo-playlist__item__autor">${item.autorName.trim()}</div>`
                             : ''
                     }
-                    <div class="todo-playlist__item__close">
-                        <i class="fa fa-close"></i>
-                    </div>
+                    <div class="todo-playlist__item__close fa fa-close" data-type="list-item-close"></div>
                 </li>
             `;
             })
@@ -94,14 +92,12 @@ export default class TodoPlaylist {
 
     handlerClick(event) {
         const { type } = event.target.dataset;
+        let currentList = this.playlist ? JSON.parse(this.playlist) : [];
+        let card = {};
 
         switch (type) {
             case 'button-add':
                 // playlist = [{"songName":"Dont Stop", "autorName":"Dovgan Evgeny"}]
-                let card = {};
-                let currentList = this.playlist
-                    ? JSON.parse(this.playlist)
-                    : [];
                 this.$fields.forEach((item, index) => {
                     if (this.$fields[index].value) {
                         card[this.$fields[index].name] = this.$fields[
@@ -121,6 +117,12 @@ export default class TodoPlaylist {
                 break;
             case 'clear-list':
                 localStorage.removeItem('playlist');
+                this.#renderList();
+                break;
+            case 'list-item-close':
+                const itemId = event.target.parentNode.dataset.id;
+                currentList.splice(itemId, 1);
+                localStorage.setItem('playlist', JSON.stringify(currentList));
                 this.#renderList();
                 break;
         }

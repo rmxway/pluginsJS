@@ -68,6 +68,11 @@
             flex-grow: 1;
             font-size: 14px;
         }
+        &__number,
+        &__song,
+        &__autor {
+            pointer-events: none;
+        }
         &__close {
             position: absolute;
             right: 10px;
