@@ -1,7 +1,14 @@
 {
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "parser": "babel-eslint",
     "extends": ["airbnb", "prettier"],
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "eslint-plugin-prettier"],
     "rules": {
-        "prettier/prettier": ["error"]
+        "prettier/prettier": ["error"],
+        "spaced-comment": 0,
+        "no-console": 0
     }
 }

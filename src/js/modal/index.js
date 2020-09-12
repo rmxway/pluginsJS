@@ -1,19 +1,19 @@
-const _createModal = function (options, speed) {
+const createModal = (options, speed) => {
     const windowWidth = options.width || '300px';
-    const description = options.description;
+    const { description } = options;
     const closable = options.closable !== undefined ? options.closable : true;
     const footerTemplate = options.footerButtons
         ? `<div class="modal__footer">${options.footerButtons
               .map((item) => {
-                  return `<button class="btn ${item.type === 'default' ? `btn-default` : ``}">
+                  return `<button class="btn ${item.type === 'default' ? `btn-default` : ``}" ${
+                      item.datatype ? item.datatype : ''
+                  }>
                     ${item.text}
                     </button>`;
               })
               .join('')}
                 </div>`
         : '';
-
-    console.log(footerTemplate);
 
     const modal = document.createElement('div');
     modal.classList.add('modal');
@@ -51,39 +51,32 @@ const _createModal = function (options, speed) {
     return modal;
 };
 
-/*
-    destroy()
-    Закрытие окна
-
-    -------------
-
-    setContent(html: string): void PUBLIC
-    onClose(): void
-    onOpen():void
-    beforeClose(): boolean
-    
-*/
-
-const Modal = function (options) {
+const Modal = (options) => {
     const ANIMATION_SPEED = options.speed || 300;
-    const $modal = _createModal(options, ANIMATION_SPEED);
+    const $modal = createModal(options, ANIMATION_SPEED);
     let destroyed = false;
 
     const modal = {
         open() {
-            if (destroyed) return console.log('Modal is destroyed');
+            if (destroyed) return;
             $modal.classList.add('open');
+            modal.onOpen();
         },
         close() {
             $modal.classList.remove('open');
+            modal.onClose();
         },
     };
 
     const handleClick = (event) => {
         const { type } = event.target.dataset;
+        // eslint-disable-next-line default-case
         switch (type) {
             case 'modal-close':
                 modal.close();
+                break;
+            case 'default':
+                break;
         }
     };
     $modal.addEventListener('click', handleClick);

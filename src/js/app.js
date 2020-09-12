@@ -1,13 +1,13 @@
-import Select from './select/index.js';
-import Carousel from './carusel/index.js';
-import TodoPlaylist from './todoplaylist/index.js';
-import Modal from './modal/index.js';
-import styles from '../scss/style.scss';
+import Select from './select';
+import Carousel from './carusel';
+import TodoPlaylist from './todoplaylist';
+import Modal from './modal/index';
+import '../scss/style.scss';
 
 // plugin of Select
 const select = new Select({
     id: 'select',
-    //selectedId: '2',
+    /*selectedId: '2',*/
     placeholder: 'Выберите ваше направление',
     data: [
         { value: 'React' },
@@ -19,6 +19,8 @@ const select = new Select({
         { value: 'SingleTone' },
     ],
 });
+
+window.select = select;
 
 // plugin of Carousel
 if (document.getElementById('slider')) {
@@ -33,7 +35,7 @@ if (document.getElementById('slider')) {
         mode: 'fade', //default 'slide
     });
 
-    window.s = slider;
+    window.slider = slider;
 }
 
 if (document.getElementById('todo-playlist')) {
@@ -47,6 +49,7 @@ if (document.getElementById('todo-playlist')) {
             id: 'autor-name',
         },
     ]);
+    window.todoPlaylist = todoPlaylist;
 }
 
 // Todo block --------------------
@@ -65,15 +68,10 @@ const myModal = Modal({
         {
             text: 'Купить',
             type: 'default',
-            handler() {
-                console.log('Купили товар');
-            },
         },
         {
             text: 'Отмена',
-            handler() {
-                console.log('Отменили покупку');
-            },
+            datatype: 'data-type="modal-close"',
         },
     ],
 });
@@ -81,7 +79,6 @@ const myModal = Modal({
 const buttonModal = document.querySelector('[data-type="modal-open"]');
 
 window.modal = myModal;
-myModal.open();
 
 buttonModal.addEventListener('click', () => {
     myModal.open();
