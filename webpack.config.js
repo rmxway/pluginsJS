@@ -9,8 +9,7 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
 // в зависимости от режима сборки, добавлять хешь к файлу или нет
-const filename = (name, ext) =>
-    isDev ? `${name}.${ext}` : `${name}.[hash].${ext}`;
+const filename = (name, ext) => (isDev ? `${name}.${ext}` : `${name}.[hash].${ext}`);
 
 module.exports = {
     mode: 'development',

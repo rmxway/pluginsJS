@@ -11,7 +11,7 @@ const createTemplate = function (inputs) {
 
     return `
         <span class="todo-playlist__title">Добавить новый трек</span>
-        <div class="field-block flex">
+        <div class="module-block flex">
             ${inputTemplate}
         </div>
         <button class="btn" data-type="button-add">Добавить</button>
@@ -80,8 +80,7 @@ export default class TodoPlaylist {
 
         // инициализация полей ввода
         this.inputs.forEach(
-            (item, index) =>
-                (this.$fields[index] = new Field(item.id, item.placeholder))
+            (item, index) => (this.$fields[index] = new Field(item.id, item.placeholder))
         );
     }
 
@@ -100,18 +99,13 @@ export default class TodoPlaylist {
                 // playlist = [{"songName":"Dont Stop", "autorName":"Dovgan Evgeny"}]
                 this.$fields.forEach((item, index) => {
                     if (this.$fields[index].value) {
-                        card[this.$fields[index].name] = this.$fields[
-                            index
-                        ].value;
+                        card[this.$fields[index].name] = this.$fields[index].value;
                         this.$fields[index].clear();
                     }
                 });
                 if (card.songName || card.autorName) {
                     currentList.push(card);
-                    localStorage.setItem(
-                        'playlist',
-                        JSON.stringify(currentList)
-                    );
+                    localStorage.setItem('playlist', JSON.stringify(currentList));
                     this.#renderList();
                 }
                 break;

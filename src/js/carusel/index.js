@@ -17,11 +17,9 @@ function createTemplate(images, first, arrows, thumbnail, thumbLines) {
         ${images
             .map((image, index) => {
                 return `
-                <div class="carousel__slider ${
-                    first && first === index + 1 ? 'current' : ''
-                }${!first && index === 0 ? 'current' : ''}" data-id="${
-                    index + 1
-                }">${image.outerHTML}</div>`;
+                <div class="carousel__slider ${first && first === index + 1 ? 'current' : ''}${
+                    !first && index === 0 ? 'current' : ''
+                }" data-id="${index + 1}">${image.outerHTML}</div>`;
             })
             .join('')}
     `;
@@ -36,9 +34,9 @@ function createTemplate(images, first, arrows, thumbnail, thumbLines) {
                             return `
                             <div class="carousel__thumbnail ${
                                 first && first === index + 1 ? 'current' : ''
-                            }${
-                                !first && index === 0 ? 'current' : ''
-                            }" data-id="${index + 1}" data-type="thumbnail"
+                            }${!first && index === 0 ? 'current' : ''}" data-id="${
+                                index + 1
+                            }" data-type="thumbnail"
                                 ${
                                     !thumbLines &&
                                     `style="background-image: url('${images[index].attributes.src.value}')"`
@@ -84,12 +82,8 @@ export default class Carousel {
 
         //Thumbnails
         if (this.options.thumbnail) {
-            this.$thumbnails = Array.from(
-                this.$el.querySelectorAll('.carousel__thumbnail')
-            );
-            this.$thumbnailBlock = this.$el.querySelector(
-                '.carousel__thumbnails'
-            );
+            this.$thumbnails = Array.from(this.$el.querySelectorAll('.carousel__thumbnail'));
+            this.$thumbnailBlock = this.$el.querySelector('.carousel__thumbnails');
         }
 
         // Arrows of carousel
@@ -99,9 +93,7 @@ export default class Carousel {
         }
 
         // Slides
-        this.$slides = Array.from(
-            this.$el.querySelectorAll('.carousel__slider')
-        );
+        this.$slides = Array.from(this.$el.querySelectorAll('.carousel__slider'));
 
         // Block with images & styles
         this.$block = this.$el.querySelector('.carousel__block');
@@ -122,9 +114,7 @@ export default class Carousel {
                 this.$block.style.width = this.slideStyles.width;
                 this.$block.style.height = this.slideStyles.height;
                 this.$slides.forEach(
-                    (item) =>
-                        (item.style.transitionDuration =
-                            this.options.speed / 1000 + 's')
+                    (item) => (item.style.transitionDuration = this.options.speed / 1000 + 's')
                 );
             }, 0);
         }
@@ -146,13 +136,7 @@ export default class Carousel {
 
     #render() {
         const { arrows, first, thumbnail, thumbLines } = this.options;
-        this.$el.innerHTML = createTemplate(
-            this.$images,
-            arrows,
-            first,
-            thumbnail,
-            thumbLines
-        );
+        this.$el.innerHTML = createTemplate(this.$images, arrows, first, thumbnail, thumbLines);
     }
 
     #firstPosition() {
@@ -162,8 +146,7 @@ export default class Carousel {
         this.movePosition(this.currentId);
         // default speed: 0.3s
         if (this.options.mode === 'slide') {
-            this.$block.style.transitionDuration =
-                this.options.speed / 1000 + 's';
+            this.$block.style.transitionDuration = this.options.speed / 1000 + 's';
         }
     }
 
@@ -179,9 +162,7 @@ export default class Carousel {
                 item.classList.remove('current');
             });
             this.$thumbnails
-                .find(
-                    (item) => parseInt(item.dataset.id, 10) === this.currentId
-                )
+                .find((item) => parseInt(item.dataset.id, 10) === this.currentId)
                 .classList.add('current');
         }
     }
@@ -245,10 +226,7 @@ export default class Carousel {
 
             if (this.currentId === maxId) {
                 this.$thumbnailBlock.style.left = -partThumb + 'px';
-            } else if (
-                this.currentId > maxId &&
-                !(this.currentId === this.$images.length)
-            ) {
+            } else if (this.currentId > maxId && !(this.currentId === this.$images.length)) {
                 this.$thumbnailBlock.style.left =
                     -partThumb - widthThumb * (this.currentId - maxId) + 'px';
             } else if (this.currentId === this.$images.length) {

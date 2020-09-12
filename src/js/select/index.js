@@ -8,9 +8,9 @@ const createTemplateSelect = function (placeholder, data = [], selectedId) {
                     textPlaceholder = item.value;
                     classItem = 'active';
                 }
-                return `<li data-id="${
-                    index + 1
-                }" class="${classItem}" data-type="item">${item.value}</li>`;
+                return `<li data-id="${index + 1}" class="${classItem}" data-type="item">${
+                    item.value
+                }</li>`;
             })
             .join('')}
     `;
@@ -40,11 +40,7 @@ export default class Select {
 
     #render(options) {
         const { placeholder, data } = options;
-        this.$el.innerHTML = createTemplateSelect(
-            placeholder,
-            data,
-            this.selectedId
-        );
+        this.$el.innerHTML = createTemplateSelect(placeholder, data, this.selectedId);
     }
 
     #setup() {
@@ -63,9 +59,7 @@ export default class Select {
             });
             event.target.classList.add('active');
             const innerText = event.target.innerText;
-            const placeholder = this.$el.querySelector(
-                '[data-type="input"] div'
-            );
+            const placeholder = this.$el.querySelector('[data-type="input"] div');
             placeholder.innerHTML = innerText;
             this.select(id);
             this.toggle();
@@ -78,9 +72,7 @@ export default class Select {
     }
 
     get current() {
-        return this.options.data.find(
-            (item, index) => index + 1 === +this.selectedId
-        );
+        return this.options.data.find((item, index) => index + 1 === +this.selectedId);
     }
 
     get isOpen() {

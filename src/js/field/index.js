@@ -52,9 +52,7 @@ export default class Field {
     #camelize(kebabString) {
         let arr = kebabString.split('-');
         let capital = arr.map((item, index) =>
-            index
-                ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
-                : item
+            index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item
         );
         let capitalString = capital.join('');
         return capitalString;

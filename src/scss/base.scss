@@ -24,7 +24,7 @@ body {
     padding: 15px;
 }
 
-.field-block {
+.module-block {
     min-width: 410px;
     margin: 0 -5px;
 }
@@ -85,5 +85,15 @@ body {
         transition-duration: 0s;
         top: 1px;
         background-color: darken($secondary-color, 15%);
+    }
+
+    &-default {
+        background-color: transparent;
+        color: darken($secondary-color, 20%);
+        border: 1px solid darken($secondary-color, 20%);
+
+        &:hover {
+            color: white;
+        }
     }
 }
