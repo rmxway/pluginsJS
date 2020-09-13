@@ -23,6 +23,9 @@ module.exports = {
         host: '0.0.0.0',
         watchContentBase: true,
     },
+    optimization: {
+        minimize: isProd,
+    },
     plugins: [
         new HTMLWebpackPlugin({
             title: 'Plugins JS',

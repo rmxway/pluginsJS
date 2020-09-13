@@ -1,7 +1,8 @@
 import Select from './select';
 import Carousel from './carusel';
 import TodoPlaylist from './todoplaylist';
-import Modal from './modal/index';
+import Modal from './modal';
+import './modal/practice';
 import '../scss/style.scss';
 
 // plugin of Select
