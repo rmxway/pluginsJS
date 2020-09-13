@@ -1,0 +1,35 @@
+.card {
+    width: calc(100% / 3);
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+
+    &__wrapper {
+        display: flex;
+        margin: 0 -10px 20px;
+    }
+
+    &__title {
+        color: #222;
+        font-size: 25px;
+        margin-top: 5px;
+        text-align: center;
+    }
+    &__image {
+        margin: 20px;
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .flex {
+        margin: 0 -5px;
+    }
+
+    .btn {
+        margin: 5px;
+        margin-bottom: 0;
+    }
+}

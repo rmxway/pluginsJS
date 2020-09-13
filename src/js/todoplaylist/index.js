@@ -11,7 +11,7 @@ const createTemplate = function (inputs) {
 
     return `
         <span class="todo-playlist__title">Добавить новый трек</span>
-        <div class="module-block flex">
+        <div class="fields-block flex">
             ${inputTemplate}
         </div>
         <button class="btn" data-type="button-add">Добавить</button>
