@@ -39,6 +39,8 @@ if (document.getElementById('slider')) {
     window.slider = slider;
 }
 
+// Todo block --------------------
+
 if (document.getElementById('todo-playlist')) {
     const todoPlaylist = new TodoPlaylist('#todo-playlist', [
         {
@@ -53,15 +55,13 @@ if (document.getElementById('todo-playlist')) {
     window.todoPlaylist = todoPlaylist;
 }
 
-// Todo block --------------------
-
 // Modal Window
 const myModal = Modal({
     speed: 200,
     description: 'Карточка товара',
     width: '500px',
     title: 'Помидоры',
-    //closable: true,
+    closable: true,
     content: `
         <p>Цена: <i>500 р.</i></p>
         <p>Описание товара: Спелые помидоры, красного цвета.</p>`,
@@ -69,10 +69,15 @@ const myModal = Modal({
         {
             text: 'Купить',
             type: 'default',
+            handleClick() {
+                myModal.close();
+            },
         },
         {
             text: 'Отмена',
-            datatype: 'data-type="modal-close"',
+            handleClick() {
+                myModal.close();
+            },
         },
     ],
 });

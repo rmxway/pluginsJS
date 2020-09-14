@@ -2,7 +2,7 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+//const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // глобальная переменная nodejs в которой хранится режим сборки
 const isDev = process.env.NODE_ENV === 'development';
@@ -71,7 +71,7 @@ module.exports = {
                 },
             },
             {
-                test: /\.(jpg|jpeg|png|tiff|gif)$/i,
+                test: /\.(jpg|JPG|jpeg|png|tiff|gif)$/,
                 loader: 'file-loader',
                 options: {
                     name: 'img/[name].[ext]',

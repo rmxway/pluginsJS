@@ -1,15 +1,15 @@
+.card__wrapper {
+    display: flex;
+    margin: 50px -10px;
+}
+
 .card {
-    width: calc(100% / 3);
-    margin: 10px;
+    flex-basis: calc(100% / 3 - 20px);
+    margin: 0 10px;
     padding: 10px;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-
-    &__wrapper {
-        display: flex;
-        margin: 0 -10px 20px;
-    }
 
     &__title {
         color: #222;
@@ -20,7 +20,10 @@
     &__image {
         margin: 20px;
         img {
+            display: block;
+            margin: 0 auto;
             max-width: 100%;
+            height: 200px;
         }
     }
 
