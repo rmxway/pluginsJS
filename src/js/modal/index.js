@@ -89,6 +89,12 @@ const Modal = (options) => {
         },
         close() {
             $modal.classList.remove('open');
+            const t = setTimeout(() => {
+                if (typeof options.onClose === 'function') {
+                    options.onClose();
+                }
+                clearTimeout(t);
+            }, ANIMATION_SPEED);
         },
     };
 
@@ -113,8 +119,6 @@ const Modal = (options) => {
         setContent(html) {
             $modal.querySelector('[data-type="content"]').innerHTML = html;
         },
-        onClose() {},
-        onOpen() {},
     });
 };
 

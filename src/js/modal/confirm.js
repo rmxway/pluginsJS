@@ -1,22 +1,36 @@
-//import Modal from './index';
+import Modal from './index';
 
 const Confirm = (options) => {
     return new Promise((resolve, reject) => {
         const modal = new Modal({
             title: options.title,
+            width: options.width,
             closable: false,
             content: options.content,
+            onClose() {
+                modal.destroy();
+            },
             footerButtons: [
                 {
                     text: 'Отмена',
-                    datatype: 'data-type="modal-close"', // 'data-type="modal-close"'
+                    handleClick() {
+                        reject();
+                        modal.close();
+                    },
                 },
                 {
                     text: 'Удалить',
-                    datatype: 'data-type="modal-close"', // 'data-type="modal-close"'
+                    handleClick() {
+                        resolve();
+                        modal.close();
+                    },
                 },
             ],
         });
+
+        setTimeout(() => {
+            modal.open();
+        }, 10);
     });
 };
 
