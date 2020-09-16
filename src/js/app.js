@@ -2,6 +2,7 @@ import Select from './select';
 import Carousel from './carusel';
 import TodoPlaylist from './todoplaylist';
 import Modal from './modal';
+import Accordeon from './accordeon';
 import './modal/practice';
 import '../scss/style.scss';
 
@@ -89,3 +90,15 @@ window.modal = myModal;
 buttonModal.addEventListener('click', () => {
     myModal.open();
 });
+
+// Accordeon --------------------
+
+if (document.getElementById('accordeon')) {
+    const acc = new Accordeon('accordeon', {
+        //items: [{ question: 'My Question', answer: 'Answer' }],
+        speed: 300,
+        independent: true, // открывать каждый блок отдельно
+    });
+
+    window.acc = acc;
+}
