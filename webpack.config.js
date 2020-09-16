@@ -2,14 +2,16 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-//const CopyWebpackPlugin = require('copy-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // глобальная переменная nodejs в которой хранится режим сборки
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
 // в зависимости от режима сборки, добавлять хешь к файлу или нет
-const filename = (name, ext) => (isDev ? `${name}.${ext}` : `${name}.[hash].${ext}`);
+const filename = (name, ext) => (isDev ? `${name}.[hash].${ext}` : `${name}.min.${ext}`);
 
 module.exports = {
     mode: 'development',
@@ -21,10 +23,22 @@ module.exports = {
     devServer: {
         port: 4000,
         host: '0.0.0.0',
-        watchContentBase: true,
     },
     optimization: {
-        minimize: isProd,
+        minimize: true,
+        minimizer: [
+            // Минимизация JS
+            new TerserPlugin({
+                exclude: '/node_modiles',
+                test: /\.js(\?.*)?$/i,
+                cache: true,
+                terserOptions: {
+                    output: {
+                        comments: isDev,
+                    },
+                },
+            }),
+        ],
     },
     plugins: [
         new HTMLWebpackPlugin({
@@ -35,33 +49,33 @@ module.exports = {
                 collapseWhitespace: isProd,
             },
         }),
-        new CleanWebpackPlugin({
-            dry: isDev,
-        }),
+        new CleanWebpackPlugin({}),
         new MiniCssExtractPlugin({
             filename: filename('style', 'css'),
         }),
-        // new CopyWebpackPlugin({
-        //     patterns: [
-        //         {
-        //             from: path.resolve(__dirname, 'src/img'),
-        //             to: path.resolve(__dirname, 'dist/img'),
-        //         },
-        //     ],
-        // }),
+        // Минимизация
+        new OptimizeCSSAssetsPlugin({}),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'src/img'),
+                    to: path.resolve(__dirname, 'dist/img'),
+                },
+                {
+                    from: path.resolve(__dirname, 'src/font-awesome/fonts'),
+                    to: path.resolve(__dirname, 'dist/fonts'),
+                },
+            ],
+        }),
     ],
     module: {
         rules: [
-            {
-                test: /\.html$/,
-                use: ['html-loader'],
-            },
             {
                 test: /\.css$/i,
                 // css-loader позволяет понимать import '*.css' в js файлах
                 // style-loader позволяет вставить css в секцию head в html в виде тега <style>
                 // лоадеры выполняются в обратном порядке, сначала css-loader, потом style-loader
-                use: ['style-loader', 'css-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
             {
                 test: /\.(ttf|woff|woff2|eot|svg)$/i,
@@ -82,17 +96,10 @@ module.exports = {
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            //hmr: isDev,
-                            reloadAll: true,
-                        },
                     },
                     'css-loader',
                     {
                         loader: 'resolve-url-loader',
-                        // options: {
-                        //     root: '',
-                        // },
                     },
                     'sass-loader',
                 ],
