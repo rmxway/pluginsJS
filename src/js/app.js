@@ -96,8 +96,8 @@ buttonModal.addEventListener('click', () => {
 if (document.getElementById('accordeon')) {
     const acc = new Accordeon('accordeon', {
         //items: [{ question: 'My Question', answer: 'Answer' }],
-        speed: 300,
-        independent: true, // открывать каждый блок отдельно
+        //speed: 300,
+        //independent: true, // открывать каждый блок отдельно
     });
 
     window.acc = acc;
