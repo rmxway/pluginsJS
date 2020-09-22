@@ -43,10 +43,10 @@ if (document.getElementById('slider')) {
     window.slider = slider;
 }
 
-// Todo block --------------------
+// Playlist block --------------------
 
 if (document.getElementById('playlist')) {
-    const todoPlaylist = new Playlist('#playlist', [
+    const playlist = new Playlist('#playlist', [
         {
             placeholder: 'Название композиции',
             id: 'song-name',
@@ -56,7 +56,7 @@ if (document.getElementById('playlist')) {
             id: 'autor-name',
         },
     ]);
-    window.todoPlaylist = todoPlaylist;
+    window.playlist = playlist;
 }
 
 // Modal Window
