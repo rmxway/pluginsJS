@@ -116,7 +116,9 @@ export default class Playlist {
             case 'list-item-close':
                 const itemId = event.target.parentNode.dataset.id;
                 currentList.splice(itemId, 1);
-                localStorage.setItem('playlist', JSON.stringify(currentList));
+                currentList.length === 0
+                    ? localStorage.removeItem('playlist')
+                    : localStorage.setItem('playlist', JSON.stringify(currentList));
                 this.#renderList();
                 break;
         }

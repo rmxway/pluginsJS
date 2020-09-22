@@ -26,10 +26,13 @@ function serverResponse(method, url) {
 
 const createTodolist = (data) => {
     const wrapper = document.querySelector('#todolist');
+    const resetButton = document.createElement('button');
     wrapper.classList.add('todolist');
+    resetButton.classList.add('btn', 'btn-black', 'todolist__resetbtn');
+    resetButton.innerText = 'сбросить задачи';
 
     const listTemplate = `${data
-        .filter((_el, idx) => idx >= 20 && idx < 35)
+        .filter((_el, idx) => idx < 10)
         .map((item, idx) => {
             //console.log(item);
             return `<div class="todolist__item${item.completed ? ' active' : ''}">
@@ -42,11 +45,18 @@ const createTodolist = (data) => {
         .join('')}`;
 
     wrapper.innerHTML = listTemplate;
+    wrapper.prepend(resetButton);
 
     const listItems = wrapper.querySelectorAll('.todolist__item');
     listItems.forEach((item) => {
         item.addEventListener('click', () => {
             item.classList.toggle('active');
+        });
+    });
+
+    resetButton.addEventListener('click', () => {
+        listItems.forEach((item) => {
+            item.classList.remove('active');
         });
     });
 };

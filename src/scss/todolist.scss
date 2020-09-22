@@ -1,11 +1,21 @@
 .todolist {
-    display:   flex;
-    flex-wrap: wrap;
-    padding:   20px 0;
-    margin:    0 -5px;
+    position:       relative;
+    display:        flex;
+    flex-direction: column;
+    padding:        20px 0;
+    margin:         0 -5px;
+
+    &__resetbtn {
+        position:   absolute;
+        top:        0;
+        right:      0;
+        width:      auto;
+        padding:    5px;
+        margin:     5px;
+        margin-top: -10px;
+    }
 
     &__item {
-        width:            calc(50% - 10px);
         display:          flex;
         align-items:      center;
         color:            #222;

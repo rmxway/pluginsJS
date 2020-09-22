@@ -106,4 +106,21 @@ header {
             color: white;
         }
     }
+
+    &-white {
+        background-color: transparent;
+        border:           1px solid white
+    }
+
+    &-black {
+        background-color: transparent;
+        border:           1px solid #222;
+        color:            #222;
+
+        &:hover {
+            background-color: transparent;
+            color:            #777;
+            border-color:     #777;
+        }
+    }
 }
