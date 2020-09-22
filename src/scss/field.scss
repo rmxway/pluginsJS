@@ -1,50 +1,50 @@
 .field {
-    position: relative;
+    position:         relative;
     background-color: lighten($secondary-color, 40%);
-    color: #222;
-    border: 1px solid darken($secondary-color, 15%);
-    border-radius: 5px;
-    flex-grow: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    margin: 20px 5px;
+    color:            #222;
+    border:           1px solid darken($secondary-color, 15%);
+    border-radius:    5px;
+    flex-grow:        1;
+    width:            100%;
+    display:          flex;
+    align-items:      center;
+    justify-content:  space-between;
+    cursor:           pointer;
+    margin:           20px 5px;
 
     &.focus {
         border-color: adjust-hue($secondary-color, 45%);
 
         label {
-            top: -17px;
+            top:       -17px;
             font-size: 10px;
         }
     }
 
     label {
-        top: 13px;
-        left: 10px;
-        position: absolute;
-        z-index: 0;
+        top:         13px;
+        left:        10px;
+        position:    absolute;
+        z-index:     0;
         font-weight: 400;
-        font-size: 12px;
-        transition: 0.1s;
+        font-size:   12px;
+        transition:  0.1s;
     }
 
     input {
-        padding: 12px;
-        background: none;
-        height: 100%;
-        width: 100%;
-        z-index: 1;
+        padding:     12px;
+        background:  none;
+        height:      100%;
+        width:       100%;
+        z-index:     1;
         font-weight: 400;
-        font-size: 14px;
+        font-size:   14px;
 
         &,
         &:focus,
         &:active,
         &::selection {
-            border: none;
+            border:  none;
             outline: none;
         }
     }

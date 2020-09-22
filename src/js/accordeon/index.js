@@ -35,7 +35,7 @@ export default class Accordeon {
     constructor(selectid, options) {
         this.selectid = selectid;
         this.options = options;
-        this.speed = options.speed || 100;
+        this.speed = options.speed || 200;
         this.independent = options.independent || false;
 
         this.$el = document.getElementById(selectid);
@@ -54,8 +54,10 @@ export default class Accordeon {
         this.$elItems = Array.from(this.$el.querySelectorAll('.accordeon__item'));
         this.$elAnswers = Array.from(this.$el.querySelectorAll('.accordeon__answer'));
 
-        // speed
+        this.#speed();
+    }
 
+    #speed() {
         this.$elAnswers.forEach(
             (item) => (item.style.transitionDuration = this.speed / 1000 + 's')
         );
@@ -69,9 +71,11 @@ export default class Accordeon {
         this.$currentItem.classList.add('open');
     }
     close() {
-        this.independent
-            ? this.$currentItem.classList.remove('open')
-            : this.$elItems.forEach((item) => item.classList.remove('open'));
+        if (this.independent) {
+            this.$currentItem.classList.remove('open');
+        } else {
+            this.$elItems.forEach((item) => item.classList.remove('open'));
+        }
     }
 
     get isOpen() {
@@ -102,6 +106,8 @@ export default class Accordeon {
 
             const { type } = event.target.dataset;
             this.$currentItem = event.target.parentNode;
+            this.$currentAnswer = this.$currentItem.querySelector('.accordeon__answer');
+
             if (type === 'question') {
                 this.toggle();
             }

@@ -1,29 +1,31 @@
 .card__wrapper {
     display: flex;
-    margin: 50px -10px;
+    margin:  50px -10px;
 }
 
 .card {
-    flex-basis: calc(100% / 3 - 20px);
-    margin: 0 10px;
-    padding: 10px;
+    flex-basis:       calc(100% / 3 - 20px);
+    margin:           0 10px;
+    padding:          10px;
     background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    border-radius:    5px;
+    box-shadow:       0 5px 20px rgba(0, 0, 0, 0.4);
 
     &__title {
-        color: #222;
-        font-size: 25px;
+        color:      #222;
+        font-size:  25px;
         margin-top: 5px;
         text-align: center;
     }
+
     &__image {
         margin: 20px;
+
         img {
-            display: block;
-            margin: 0 auto;
+            display:   block;
+            margin:    0 auto;
             max-width: 100%;
-            height: 200px;
+            height:    200px;
         }
     }
 
@@ -32,7 +34,7 @@
     }
 
     .btn {
-        margin: 5px;
+        margin:        5px;
         margin-bottom: 0;
     }
 }

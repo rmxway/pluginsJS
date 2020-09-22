@@ -1,25 +1,26 @@
 .modal {
     &__overlay {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        position:         fixed;
+        top:              0;
+        bottom:           0;
+        left:             0;
+        right:            0;
+        display:          flex;
+        justify-content:  center;
+        align-items:      center;
         background-color: #000000a3;
     }
+
     &__window {
-        transform: translate(0, -20px);
-        min-height: 100px;
-        max-width: 1000px;
+        transform:        translate(0, -20px);
+        min-height:       100px;
+        max-width:        1000px;
         background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 10px 30px #00000092;
-        padding: 15px;
-        color: #222;
-        overflow: hidden;
+        border-radius:    5px;
+        box-shadow:       0 10px 30px #00000092;
+        padding:          15px;
+        color:            #222;
+        overflow:         hidden;
     }
 
     &__overlay,
@@ -29,6 +30,7 @@
     }
 
     &.open {
+
         .modal__window,
         .modal__overlay {
             opacity: 1;
@@ -39,41 +41,46 @@
             transform: translate(0, 0);
         }
     }
+
     &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
+        display:          flex;
+        justify-content:  space-between;
+        align-items:      flex-start;
         background-color: #eee;
-        margin: -15px -15px 0;
-        padding: 15px 15px 0;
+        margin:           -15px -15px 0;
+        padding:          15px 15px 0;
 
         .modal__title {
-            font-size: 20px;
-            font-weight: 400;
+            font-size:     20px;
+            font-weight:   400;
             margin-bottom: 20px;
+
             span {
-                display: block;
-                font-size: 18px;
+                display:     block;
+                font-size:   18px;
                 font-weight: 100;
             }
         }
+
         .modal__close {
-            position: relative;
-            top: -7px;
-            right: -10px;
-            text-align: center;
-            width: 30px;
-            font-size: 25px;
+            position:    relative;
+            top:         -7px;
+            right:       -10px;
+            text-align:  center;
+            width:       30px;
+            font-size:   25px;
             line-height: 1;
             margin-left: 20px;
-            cursor: pointer;
+            cursor:      pointer;
         }
     }
+
     &__body {
-        padding: 20px 0;
+        padding:   20px 0;
         font-size: 18px;
+
         p {
-            margin: 0;
+            margin:  0;
             padding: 0;
         }
 
@@ -81,9 +88,10 @@
             font-weight: 400;
         }
     }
+
     &__footer {
         display: flex;
-        margin: 0 -5px;
+        margin:  0 -5px;
     }
 
     .btn {

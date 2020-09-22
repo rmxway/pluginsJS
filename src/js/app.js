@@ -1,10 +1,13 @@
+'use-strict';
+
 import Select from './select';
 import Carousel from './carusel';
-import TodoPlaylist from './todoplaylist';
+import Playlist from './playlist';
 import Modal from './modal';
 import Accordeon from './accordeon';
 import './modal/practice';
 import '../scss/style.scss';
+import './todolist';
 
 // plugin of Select
 const select = new Select({
@@ -42,8 +45,8 @@ if (document.getElementById('slider')) {
 
 // Todo block --------------------
 
-if (document.getElementById('todo-playlist')) {
-    const todoPlaylist = new TodoPlaylist('#todo-playlist', [
+if (document.getElementById('playlist')) {
+    const todoPlaylist = new Playlist('#playlist', [
         {
             placeholder: 'Название композиции',
             id: 'song-name',

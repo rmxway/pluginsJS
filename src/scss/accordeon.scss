@@ -1,9 +1,9 @@
 .accordeon {
-    display: flex;
+    display:        flex;
     flex-direction: column;
 
     &__item {
-        width: 100%;
+        width:         100%;
         margin-bottom: 2px;
 
         &:last-child {
@@ -14,47 +14,53 @@
             .fa {
                 transform: scale(1, -1);
             }
+
             .accordeon__answer {
-                max-height: 500px;
-                padding: 10px;
+                padding:          10px;
+                max-height:       150px;
+                transition-delay: 0s;
             }
+
             .accordeon__question {
                 border-radius: 5px 5px 0 0;
             }
         }
     }
+
     &__question {
-        display: flex;
+        display:         flex;
         justify-content: space-between;
-        padding: 11px 10px;
-        //text-transform: uppercase;
-        letter-spacing: 1px;
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: 400;
+        padding:         11px 10px;
+        letter-spacing:  1px;
+        cursor:          pointer;
+        font-size:       12px;
+        font-weight:     400;
 
         background-color: lighten($secondary-color, 40%);
-        border-radius: 5px;
-        line-height: 1;
-        color: #333;
-        box-shadow: 0 1px 2px #00000053;
+        border-radius:    5px;
+        line-height:      1;
+        color:            #333;
+        box-shadow:       0 1px 2px #00000053;
 
         .fa {
-            font-size: 10px;
+            font-size:      10px;
             pointer-events: none;
-            transition: 0.2s;
+            transition:     0.2s;
         }
     }
+
     &__answer {
-        padding: 0 10px;
-        display: block;
-        color: #222;
-        background-color: #fff9;
-        max-height: 0px;
-        font-size: 12px;
-        letter-spacing: 0.5px;
-        overflow: hidden;
-        border-radius: 0 0 5px 5px;
+        padding:                    0 10px;
+        display:                    block;
+        max-height:                 0px;
+        color:                      #222;
+        background-color:           #fff9;
+        font-size:                  12px;
+        letter-spacing:             0.5px;
+        overflow:                   hidden;
+        border-radius:              0 0 5px 5px;
+        transition-timing-function: linear;
+        transition-delay:           0.1s;
 
         strong {
             text-transform: uppercase;

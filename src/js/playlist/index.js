@@ -10,7 +10,7 @@ const createTemplate = function (inputs) {
         .join('');
 
     return `
-        <span class="todo-playlist__title">Добавить новый трек</span>
+        <span class="playlist__title">Добавить новый трек</span>
         <div class="fields-block flex">
             ${inputTemplate}
         </div>
@@ -23,25 +23,25 @@ const listTemplate = function (playlistJSON) {
     const playlistTemplate =
         playlistJSON !== null
             ? `
-        <span class="todo-playlist__title">Список треков</span>
-        <div class="todo-playlist__clear fa fa-trash-o" data-type="clear-list"></div>
-        <ul class="todo-playlist__list">
+        <span class="playlist__title">Список треков</span>
+        <div class="playlist__clear fa fa-trash-o" data-type="clear-list"></div>
+        <ul class="playlist__list">
         ${playlistJSON
             .map((item, index) => {
                 return `
-                <li class="todo-playlist__item" data-id="${index}" data-type="list-item">
-                    <div class="todo-playlist__item__number">${index + 1}</div>
+                <li class="playlist__item" data-id="${index}" data-type="list-item">
+                    <div class="playlist__item__number">${index + 1}</div>
                     ${
                         item.songName
-                            ? `<div class="todo-playlist__item__song">${item.songName.trim()}</div>`
+                            ? `<div class="playlist__item__song">${item.songName.trim()}</div>`
                             : ''
                     }
                     ${
                         item.autorName
-                            ? `<div class="todo-playlist__item__autor">${item.autorName.trim()}</div>`
+                            ? `<div class="playlist__item__autor">${item.autorName.trim()}</div>`
                             : ''
                     }
-                    <div class="todo-playlist__item__close fa fa-close" data-type="list-item-close"></div>
+                    <div class="playlist__item__close fa fa-close" data-type="list-item-close"></div>
                 </li>
             `;
             })
@@ -51,7 +51,7 @@ const listTemplate = function (playlistJSON) {
     return playlistTemplate;
 };
 
-export default class TodoPlaylist {
+export default class Playlist {
     constructor(selectedId, inputs) {
         this.inputs = inputs;
 
