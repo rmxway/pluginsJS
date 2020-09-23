@@ -1,6 +1,10 @@
 .card__wrapper {
     display: flex;
     margin:  50px -10px;
+
+    @include breakpoint-down(sm) {
+        flex-direction: column;
+    }
 }
 
 .card {
@@ -10,6 +14,11 @@
     background-color: white;
     border-radius:    5px;
     box-shadow:       0 5px 20px rgba(0, 0, 0, 0.4);
+
+    @include breakpoint-down(sm) {
+        flex-basis:    100%;
+        margin-bottom: 20px;
+    }
 
     &__title {
         color:      #222;
@@ -30,7 +39,8 @@
     }
 
     .flex {
-        margin: 0 -5px;
+        margin:         0 -5px;
+        flex-direction: row;
     }
 
     .btn {

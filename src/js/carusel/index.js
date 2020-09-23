@@ -119,8 +119,6 @@ export default class Carousel {
             }, 0);
         }
 
-        this.handleClick = this.handleClick.bind(this);
-
         // Autoplay
         if (this.options.auto) {
             this.createInterval();
@@ -129,6 +127,8 @@ export default class Carousel {
             this.$el.addEventListener('mouseenter', this.removeInterval);
             this.$el.addEventListener('mouseleave', this.createInterval);
         }
+
+        this.handleClick = this.handleClick.bind(this);
 
         // Event Click
         this.$el.addEventListener('click', this.handleClick);
