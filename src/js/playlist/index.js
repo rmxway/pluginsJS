@@ -11,7 +11,7 @@ const createTemplate = function (inputs) {
 
     return `
         <span class="playlist__title">Добавить новый трек</span>
-        <div class="fields-block flex">
+        <div class="fields-block">
             ${inputTemplate}
         </div>
         <button class="btn" data-type="button-add">Добавить</button>
@@ -69,26 +69,6 @@ export default class Playlist {
         this.$el.addEventListener('click', this.handlerClick);
     }
 
-    #getList() {
-        // Получение JSON из localStorage
-        this.playlist = localStorage.getItem('playlist');
-        this.playlistJSON = JSON.parse(this.playlist);
-    }
-
-    #render() {
-        this.$el.innerHTML = createTemplate(this.inputs);
-
-        // инициализация полей ввода
-        this.inputs.forEach(
-            (item, index) => (this.$fields[index] = new Field(item.id, item.placeholder))
-        );
-    }
-
-    #renderList() {
-        this.#getList();
-        this.$list.innerHTML = listTemplate(this.playlistJSON);
-    }
-
     handlerClick(event) {
         const { type } = event.target.dataset;
         let currentList = this.playlist ? JSON.parse(this.playlist) : [];
@@ -122,6 +102,26 @@ export default class Playlist {
                 this.#renderList();
                 break;
         }
+    }
+
+    #getList() {
+        // Получение JSON из localStorage
+        this.playlist = localStorage.getItem('playlist');
+        this.playlistJSON = JSON.parse(this.playlist);
+    }
+
+    #render() {
+        this.$el.innerHTML = createTemplate(this.inputs);
+
+        // инициализация полей ввода
+        this.inputs.forEach(
+            (item, index) => (this.$fields[index] = new Field(item.id, item.placeholder))
+        );
+    }
+
+    #renderList() {
+        this.#getList();
+        this.$list.innerHTML = listTemplate(this.playlistJSON);
     }
 
     destroy() {

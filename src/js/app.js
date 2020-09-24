@@ -5,9 +5,9 @@ import Carousel from './carusel';
 import Playlist from './playlist';
 import Modal from './modal';
 import Accordeon from './accordeon';
+import Todolist from './todolist';
 import './modal/practice';
 import '../scss/style.scss';
-import './todolist';
 
 // plugin of Select
 const select = new Select({
@@ -105,3 +105,8 @@ if (document.getElementById('accordeon')) {
 
     window.acc = acc;
 }
+
+// Todolist
+
+const todolist = new Todolist('todolist');
+window.todolist = todolist;

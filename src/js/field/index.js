@@ -35,12 +35,19 @@ export default class Field {
     }
 
     onBlur() {
-        if (this.value.length === 0) this.$el.classList.remove('focus');
+        if (this.value.length === 0) {
+            this.$el.classList.remove('focus');
+            this.$input.blur();
+        }
+    }
+
+    empty() {
+        this.value = '';
+        this.$input.value = '';
     }
 
     clear() {
-        this.value = '';
-        this.$input.value = '';
+        this.empty();
         this.onBlur();
     }
 

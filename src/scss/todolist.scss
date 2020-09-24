@@ -2,8 +2,22 @@
     position:       relative;
     display:        flex;
     flex-direction: column;
-    padding:        20px 0;
     margin:         0 -5px;
+
+    // Если есть элемент(ы) в списке
+    &.hasElements {
+        .todolist {
+
+            &__resetbtn,
+            &__block {
+                display: block;
+            }
+        }
+    }
+
+    .field {
+        width: auto;
+    }
 
     &__resetbtn {
         position:   absolute;
@@ -12,10 +26,17 @@
         width:      auto;
         padding:    5px;
         margin:     5px;
-        margin-top: -10px;
+        margin-top: -15px;
+        display:    none;
+    }
+
+    &__block {
+        padding: 0 0 20px;
+        display: none;
     }
 
     &__item {
+        position:         relative;
         display:          flex;
         align-items:      center;
         color:            #222;
@@ -26,6 +47,18 @@
         margin:           5px;
         cursor:           pointer;
         transition:       .2s;
+
+        &::before {
+            position:         absolute;
+            top:              0;
+            right:            0;
+            left:             0;
+            bottom:           0;
+            background-color: #0000;
+            display:          block;
+            content:          '';
+            z-index:          1;
+        }
 
         &.active {
             background-color: #fffb;
